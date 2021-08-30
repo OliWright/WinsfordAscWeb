@@ -1,0 +1,14 @@
+﻿
+
+.node-mover-container table td { cursor: pointer;margin-bottom: 5px;font-size: 13px;padding: 5px;}
+.node-mover-container table tr { margin-bottom: 5px;}
+
+.node-mover-container table td:nth-child(1) { width: 14px;}
+.node-mover-container table td:nth-child(2) { width: 16px;}
+.node-mover-container table td:nth-child(3) { width: 450px;}
+
+.node-mover-container table tr.selected td { background-color: #2e8aea;color: white;}
+
+.node-mover-container .search-filter { margin-bottom: 10px;}
+
+.node-mover-container .search-filter input { width:  97%;}

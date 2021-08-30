@@ -1,0 +1,54 @@
+﻿<div ng-controller="EnkelMedia.NodeMoverAction.Controller" class="node-mover-container">
+
+    <div class="umb-dialog-body form-horizontal">
+        <div class="umb-pane">
+            <div ng-show="step=='1'">
+                <p>
+                    <localize key="multiMover_selectNodesToMove">Move selected nodes</localize>
+                </p>
+                <div class="search-filter" ng-show="nodes.length > 20">
+                    <input type="text" placeholder="Filter child nodes table" ng-model="searchFilter"/>
+                </div>
+                <table class="table">
+                    <tr ng-repeat="node in nodes | filter:searchFilter" ng-class="{'selected':node.selected}">
+                        <td><input type="checkbox" ng-model="node.selected"/></td>
+                        <td ng-click="node.selected = !node.selected">
+                            <i class="icon {{node.icon}}"></i>
+                        </td>
+                        <td ng-click="node.selected = !node.selected">{{node.name}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div ng-show="step=='2'">
+                <p>
+                    <localize key="multiMover_selectParentNode">Select the parent node where you want to move your</localize> {{selectedNodes().length}} <localize key="multiMover_selectedNodes">selected nodes</localize>
+                </p>
+                <umb-tree section="content"
+                          hideheader="false"
+                          hideoptions="true"
+                          isdialog="true"
+                          eventhandler="dialogTreeEventHandler"
+                          enablecheckboxes="true">
+                </umb-tree>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="umb-dialog-footer btn-toolbar umb-btn-toolbar" ng-hide="success">
+        <a class="btn btn-link" ng-click="nav.hideDialog()" ng-if="!busy">
+            <localize key="general_cancel">Cancel</localize>
+        </a>
+        <button class="btn btn-primary" ng-show="step=='1'" ng-click="showStep2()" ng-disabled="busy || selectedNodes().length==0">
+            <localize key="multiMover_moveSelectedNodes">Move selected nodes</localize>
+        </button>
+        <button class="btn" ng-show="step=='2'" ng-click="step='1'" ng-disabled="busy">
+            <localize key="multiMover_Back">Back</localize>
+        </button>
+        <button class="btn btn-primary" ng-show="step=='2'" ng-click="performMove()" ng-disabled="busy || selectedNodes().length==0 || !target">
+            
+            <localize key="multiMover_performMovingOf">Perform moving of </localize> {{selectedNodes().length}} <localize key="multiMover_nodes">nodes</localize>.
+        </button>
+    </div>
+
+</div>

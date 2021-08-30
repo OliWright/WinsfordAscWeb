@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<language>
+  <area alias="multiMover">
+    <key alias="menuActionLabel">Flytta flera</key>
+    <key alias="selectNodesToMove">Markera de noder som skall flyttas</key>
+    <key alias="selectParentNode">Markera den nod dit du vill flytta de </key>
+    <key alias="selectedNodes">markerade noderna.</key>
+    
+    <key alias="moveSelectedNodes">Flytta markerade noder</key>
+    <key alias="performMovingOf">Genomför flytt av</key>
+    <key alias="Back">Tillbaka</key>
+    <key alias="nodes">noder</key>
+
+    <key alias="nodesMovedSuccessMessage">Noder flyttade</key>
+  </area>
+</language>

@@ -1,0 +1,8 @@
+﻿{
+  "css": [
+    "/app_plugins/MultiMover/style.css"
+  ], 
+  "javascript": [
+    "/app_plugins/MultiMover/multiMover.js"
+  ]
+}

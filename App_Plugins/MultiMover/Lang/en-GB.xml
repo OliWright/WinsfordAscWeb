@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<language>
+  <area alias="multiMover">
+    <key alias="menuActionLabel">Move multiple</key>
+    <key alias="selectNodesToMove">Select the nodes that you would like to move</key>
+    <key alias="selectParentNode">Select the parent node where you want to move your</key>
+    <key alias="selectedNodes">selected nodes.</key>
+
+    <key alias="moveSelectedNodes">Move selected nodes</key>
+    <key alias="performMovingOf">Perform moving of</key>
+    <key alias="nodes">nodes</key>
+
+    <key alias="nodesMovedSuccessMessage">Nodes was moved successfully</key>
+  </area>
+</language>
