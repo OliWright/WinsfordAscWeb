@@ -409,7 +409,11 @@ FodyWeavers.xsd
 **/App_Data/Models/ood.flag
 
 # Winsford specifics that we don't want to go onto GitHub
+App_Data/GoogleSheetsData.json
+App_Data/.credentials/
 club_champs_scoring/
+results/
 Media/
 config/email.config
 config/connectionStrings.config
+WebLive.config
