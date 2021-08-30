@@ -82,13 +82,13 @@
                             if( item.HasProperty("page") )
                             {
                                 url = item.page.ToString();
-                                if( item.page == 0 )
+                                if( item.page == null )
                                 {
                                     url = "/";
                                 }
                                 else
                                 {
-                                    url = Umbraco.TypedContent(item.page).Url;
+                                    url = Umbraco.TypedContent(item.page.Id).Url;
                                 }
                                 buttonText = "Go to Page";
                             }

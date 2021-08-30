@@ -12,15 +12,31 @@
     }
     --pageIdx; // We're zero based
 
-	// The current page is the news overview page
+    // If the editor has not explicitly provided the "Page title" property page 
+    // then just show the name of the page otherwise show the provided title
+    var pageTitle = string.IsNullOrWhiteSpace(CurrentPage.Title)
+        ? CurrentPage.Name
+        : CurrentPage.Title;
+
+    // The current page is the news overview page
     var newsOverview = CurrentPage;
 
     // Similar to above: find all pages with document type umbNewsItem under the news overview page
     // Then order them, first by publishDate (a property the editor can explicitly set on the news item)
     // and then by createDate, which is set by Umbraco automatically when a page gets created.
     DynamicPublishedContentList newsItems = newsOverview.umbNewsItems;
-   	DynamicPublishedContentList updateNotifications = CurrentPage.AncestorsOrSelf(1).First().Children( "updateNotificationCollection" ).First().Children( "updateNotification" );
-    IQueryable<IPublishedContent> allNewsItems = newsItems.Concat( updateNotifications ).OrderBy("publishDate desc, createDate desc");
+    IQueryable<IPublishedContent> allNewsItems;
+    if(newsOverview.Name == "News")
+    {
+        // This is the main news page.  Concatenate with the update notifications
+        DynamicPublishedContentList updateNotifications = CurrentPage.AncestorsOrSelf(1).First().Children("updateNotificationCollection").First().Children("updateNotification");
+        allNewsItems = newsItems.Concat(updateNotifications).OrderBy("publishDate desc, createDate desc");
+    }
+    else
+    {
+        // Must be an archive news page
+        allNewsItems = newsItems.OrderBy("publishDate desc, createDate desc");
+    }
 }
 
 <!DOCTYPE html>
@@ -48,8 +64,11 @@
                         <!-- Content -->
                         <article class="is-page-content">
                             <header>
-                                <h2>News</h2>
+                                <h2>@pageTitle</h2>
                             </header>
+                            <section>
+                                @CurrentPage.BodyText
+                            </section>
                             <div id="postswrapper"></div>
                             <div id="loadmoreajaxloader" style="display:none;">Loading</div>
                         </article>
