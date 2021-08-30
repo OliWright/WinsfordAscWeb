@@ -1,0 +1,28 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+@using Umbraco.Web.Controllers
+
+@{
+    var currentUrl = HttpContext.Current.Request.Url.AbsolutePath.ToString();
+    if (@currentUrl[currentUrl.Length - 1] != '/')
+    {
+        currentUrl = currentUrl + "/";
+    }
+    string targetPageTitle = "";
+    if( (currentUrl != "/umbraco/RenderMvc/") && (currentUrl != "/login/"))
+    {
+        var content = UmbracoContext.ContentCache.GetByRoute(currentUrl);
+        if( content != null )
+        {
+            targetPageTitle = content.Name;
+        }
+    }
+}
+
+@using (Html.BeginUmbracoForm<UmbLoginController>("HandleLogin"))
+{
+    if( !string.IsNullOrEmpty(targetPageTitle) )
+    {
+        <p>"@targetPageTitle" is protected. You must be logged in to view it.</p>
+    }
+}

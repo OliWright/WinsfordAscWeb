@@ -1,0 +1,261 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@using System.Xml;
+@using Winsford;
+
+@{
+    bool showClosingDates;
+    if (!bool.TryParse(Model.MacroParameters["showClosingDates"].ToString(), out showClosingDates))
+    {
+        showClosingDates = false;
+    }
+
+    IList<IList<Object>> values = GoogleSheet.Read(GoogleSheet.spreadSheets["calendar"], "A2:J");
+
+    DateTime currentMonthMarker = new DateTime(2000, 1, 1);
+    DateTime previousEntryDate = new DateTime(2000, 1, 1);
+
+    int numColumns = showClosingDates ? 7 : 6;
+}
+
+@functions{
+    public bool IsMonthMarkerRequired(DateTime date, ref DateTime currentMonthMarker)
+    {
+        DateTime dateMonth = new DateTime(date.Year, date.Month, 1);
+        if (dateMonth > currentMonthMarker)
+        {
+            currentMonthMarker = dateMonth;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public static string DayWithOrdinal(DateTime d)
+    {
+        int day = d.Day;
+        string ordinalStr = "th";
+
+        switch (day % 100)
+        {
+            case 11:
+            case 12:
+            case 13:
+                break;
+
+            default:
+                switch (day % 10)
+                {
+                    case 1:
+                        ordinalStr = "st";
+                        break;
+                    case 2:
+                        ordinalStr = "nd";
+                        break;
+                    case 3:
+                        ordinalStr = "rd";
+                        break;
+                    default:
+                        break;
+                }
+                break;
+        }
+
+        return day.ToString() + ordinalStr;
+    }
+
+    public static string ShortDateString(DateTime d)
+    {
+        return d.ToString("ddd ") + DayWithOrdinal(d);
+    }
+
+    public enum Column
+    {
+        eStartDate,
+        eEndDate,
+        eMeet,
+        eLink,
+        eVenue,
+        eLevel,
+        eCourse,
+        eSquad,
+        eClosingDate,
+        eSticky
+    }
+
+    public static string GetStringValue(IList<Object> row, Column column)
+    {
+        return GoogleSheet.GetStringValue(row, (int)column);
+    }
+}
+
+@helper AddMonthMarker(DateTime date, int numColumns)
+{
+    <tr class="month">
+        <td colspan="@numColumns">@date.ToString("MMMM yyyy")</td>
+    </tr>
+}
+
+
+<table>
+    <thead>
+        <tr><th>Date</th><th>Meet</th><th>Venue</th><th>Level</th><th>Course</th><th>Squad</th>@if (showClosingDates)
+        {<th>Closing Date</th>}</tr>
+    </thead>
+    <tbody>
+
+        @foreach (IList<Object> row in values)
+        {
+            string startDateStr = GetStringValue(row, Column.eStartDate);
+            string dateStr;
+            // startDateStr could be an actual date, or it might be a string like "Sat/Sun TBC"
+            // If it's an actual date, then we need to know if we've entered a new month, so we
+            // can add a month marker.
+            // Also, we need to disregard any dates that have already passed.
+            if (!string.IsNullOrEmpty(startDateStr) && Char.IsDigit(startDateStr[0]))
+            {
+                // It starts with a digit, so let's figure this is an actual date.
+                DateTime startDate = DateTime.Parse(startDateStr);
+                DateTime endDate = startDate;
+                string endDateStr = GetStringValue(row, Column.eEndDate);
+                int numDays = 1;
+                if (!string.IsNullOrEmpty(endDateStr))
+                {
+                    endDate = DateTime.Parse(endDateStr);
+                    numDays = (endDate - startDate).Days + 1;
+                }
+                bool isSticky = GetStringValue(row, Column.eSticky).ToLower() == "yes";
+                if ((endDate < DateTime.Today) && !isSticky)
+                {
+                    // Disregard this entire row
+                    previousEntryDate = startDate;
+                    continue;
+                }
+                if (IsMonthMarkerRequired(startDate, ref currentMonthMarker))
+                {
+                    @AddMonthMarker(startDate, numColumns);
+                }
+
+                // We need to construct a friendly string representing the date range of the event
+                // How many days?
+                if (numDays < 1)
+                {
+                    // This has to be some kind of mistake
+                    dateStr = "Date Error";
+                }
+                else if (numDays == 1)
+                {
+                    dateStr = ShortDateString(startDate);
+                }
+                else if (numDays == 2)
+                {
+                    dateStr = startDate.ToString("ddd") + "/" + endDate.ToString("ddd") + " " + DayWithOrdinal(startDate) + " & " + DayWithOrdinal(endDate);
+                }
+                else if (numDays < 7)
+                {
+                    dateStr = startDate.ToString("ddd") + "-" + endDate.ToString("ddd") + " " + DayWithOrdinal(startDate) + " - " + DayWithOrdinal(endDate);
+                }
+                else
+                {
+                    dateStr = DayWithOrdinal(startDate) + " - " + DayWithOrdinal(endDate);
+                }
+            }
+            else
+            {
+                // It's unlikely to be a date because it doesn't start with a digit.
+                // So we'll just take the string as it is, and hope it's in the same
+                // month as our current marker.
+                if (previousEntryDate != null)
+                {
+                    if (IsMonthMarkerRequired(previousEntryDate, ref currentMonthMarker))
+                    {
+                        @AddMonthMarker(previousEntryDate, numColumns);
+                    }
+                }
+                dateStr = startDateStr;
+            }
+
+            string description = GetStringValue(row, Column.eMeet);
+            if (string.IsNullOrEmpty(description))
+            {
+                // Empty description
+                continue;
+            }
+            string venue = GetStringValue(row, Column.eVenue);
+            if (string.IsNullOrEmpty(venue))
+            {
+                // There is no venue listed for this entry.
+                // This means it's likely to be a date marker for something like a qualifying window opening
+                // or closing
+                <tr class="deadline">
+                    <td>@dateStr</td>
+                    <td colspan="@(numColumns-1)">@description</td>
+                </tr>
+            }
+            else
+            {
+                string trClass = "";
+                string squad = GetStringValue(row, Column.eSquad);
+                if (description == "Long Course Training")
+                {
+                    if (squad.StartsWith("Group A"))
+                    {
+                        trClass = "training_a";
+                    }
+                    else if (squad.StartsWith("Group B"))
+                    {
+                        trClass = "training_b";
+                    }
+                    else
+                    {
+                        trClass = "training";
+                    }
+                }
+                string link = GetStringValue(row, Column.eLink);
+                if (!string.IsNullOrEmpty(link))
+                {
+                    description = "<a href=\"" + link + "\">" + description + "</a>";
+                }
+
+                string closingDateTD = "";
+                if (showClosingDates)
+                {
+                    string closingDateStr = GetStringValue(row, Column.eClosingDate);
+                    string tdClass = "";
+                    if (!string.IsNullOrEmpty(closingDateStr))
+                    {
+                        DateTime closingDate = DateTime.Parse(closingDateStr);
+                        int numDaysRemaining = (closingDate - DateTime.Today).Days;
+                        if (numDaysRemaining > 7)
+                        {
+                            tdClass = "green";
+                        }
+                        else if (numDaysRemaining > 3)
+                        {
+                            tdClass = "amber";
+                        }
+                        else if (numDaysRemaining >= 0)
+                        {
+                            tdClass = "red";
+                        }
+                        else
+                        {
+                            tdClass = "missed";
+                        }
+                    }
+                    closingDateTD = "<td class=\"" + tdClass + "\">" + closingDateStr + "</td>";
+                }
+                <tr class="@trClass">
+                    <td>@dateStr</td>
+                    <td>@Html.Raw(description)</td>
+                    <td>@venue</td>
+                    <td>@GetStringValue(row, Column.eLevel)</td>
+                    <td>@GetStringValue(row, Column.eCourse)</td>
+                    <td>@squad</td>
+                    @Html.Raw(closingDateTD)
+                </tr>
+            }
+        }
+    </tbody>
+</table>

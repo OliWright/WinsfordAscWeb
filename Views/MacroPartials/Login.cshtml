@@ -1,0 +1,92 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+@using System.Web.Mvc.Html
+@using ClientDependency.Core.Mvc
+@using Umbraco.Web
+@using Umbraco.Web.Models
+@using Umbraco.Web.Controllers
+
+@{
+	var loginNodeID = 1111;
+    LoginModel loginModel = new LoginModel();
+	LoginStatusModel loginStatusModel = Members.GetCurrentLoginStatus();
+	//ProfileModel profileModel = Members.GetCurrentMemberProfileModel();
+    
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
+    Html.RequiresJs("/umbraco_client/ui/jquery.js");
+    Html.RequiresJs("/umbraco_client/Application/JQuery/jquery.validate.min.js");
+    Html.RequiresJs("/umbraco_client/Application/JQuery/jquery.validate.unobtrusive.min.js");
+
+	string currentUrl = HttpContext.Current.Request.Url.AbsolutePath.ToString();
+    
+    // add a trailing / if there isn't one (you can access http://mydomain.com/login or http://mydomain.com/login/
+    if (@currentUrl[currentUrl.Length -1] != '/')
+	{
+        currentUrl = currentUrl + "/";
+    }
+	@* <p>Redir Before: @HttpContext.Current.Session["redirectURL"]</p> *@
+ 
+    @* if we don't have a session variable and have a request URL then store it *@
+    @* we have to store it because if user tries an incorrect login then Current.Request.Url will show /umbraco/RenderMvc *@
+    if (HttpContext.Current.Request.Url != null && currentUrl != "/umbraco/RenderMvc/" && HttpContext.Current.Session["redirectURL"] == null)
+	{
+        if (currentUrl != "/login/")
+		{
+            HttpContext.Current.Session["redirectURL"] = currentUrl;
+        }
+    }
+	@*
+	<p>@HttpContext.Current.Session["redirectURL"]</p>
+	<p>@currentUrl</p>
+	<p>@Umbraco.Content(loginNodeID).Url</p>
+	<p>Redir After: @HttpContext.Current.Session["redirectURL"]</p>
+	<p>@loginStatusModel.IsLoggedIn</p>
+	*@
+
+    if(loginStatusModel.IsLoggedIn)
+    {
+        if (HttpContext.Current.Session["redirectURL"] != null)
+        {
+            // clear the session variable for future logins
+            var redirectUrl = (string)HttpContext.Current.Session["redirectURL"];
+            // Fail-safe for multiple redirects to login page
+            if (@redirectUrl[redirectUrl.Length -1] != '/')
+            {
+                redirectUrl = redirectUrl + "/";
+            }
+            if( redirectUrl == "/login/" )
+            {
+                redirectUrl = "/"; // That should do it.
+            }
+            HttpContext.Current.Session["redirectURL"] = null;
+            HttpContext.Current.Response.Redirect(redirectUrl);
+        }
+        else
+        {
+            // Nothing in the session so we will go home 
+            HttpContext.Current.Response.Redirect("/");
+        }
+    }
+}
+
+@using (Html.BeginUmbracoForm<UmbLoginController>("HandleLogin"))
+{
+    <fieldset>
+        
+        @Html.ValidationSummary("loginModel", true)
+
+        @* @Html.LabelFor(m => loginModel.Username) *@
+		<label>Email</label>
+        @Html.TextBoxFor(m => loginModel.Username)
+        @Html.ValidationMessageFor(m => loginModel.Username)
+        <br />
+
+        @Html.LabelFor(m => loginModel.Password)
+        @Html.PasswordFor(m => loginModel.Password)
+        @Html.ValidationMessageFor(m => loginModel.Password)
+        <br />
+
+        <input type="submit" value="Login"/>
+    </fieldset>  
+}

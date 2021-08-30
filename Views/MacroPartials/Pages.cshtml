@@ -1,0 +1,54 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+@{
+    // Shows a list of pages with links and previous and next links where appropriate
+    //
+    // Parameters:
+    //    currentPage
+    //    totalNumPages
+@*@using System.Web.Mvc.Html
+@using ClientDependency.Core.Mvc
+@using Umbraco.Web
+@using Umbraco.Web.Models
+@using Umbraco.Web.Controllers*@
+
+    // Parse parameters
+    int currentPage;
+    if (!int.TryParse( Model.MacroParameters["currentPage"].ToString(), out currentPage))    
+    {
+        currentPage = 1;
+    }
+
+    int totalNumPages;
+    if (!int.TryParse( Model.MacroParameters["totalNumPages"].ToString(), out totalNumPages))    
+    {
+        totalNumPages = 1;
+    }
+}
+
+@if( totalNumPages > 1 ) // No point showing anything at all if there's only one page
+{
+    <div class="pager">
+        Pages:
+        @if( currentPage > 1 )
+        {
+            <a href="?page=1"><< First</a>
+            <a href="?page=@(currentPage-1)"><<</a>
+        }
+        @for( int p = 1; p <= totalNumPages; ++p )
+        {
+            string itemClass="";
+            if( p == currentPage ) { itemClass = "target"; }
+            <a class="@itemClass" href="?page=@p">@p</a>
+        }
+        @if( currentPage < totalNumPages )
+        {
+            <a href="?page=@(currentPage+1)">>></a>
+            <a href="?page=1">>> Last</a>
+        }
+    </div>   
+}
+else
+{
+    <p>Only 1 page!</p>
+}

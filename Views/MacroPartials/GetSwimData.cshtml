@@ -1,0 +1,21 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@using System.Xml;
+@using Umbraco.Web;
+@using Umbraco.Web.Models;
+@using Winsford;
+@using Google.Apis.Sheets.v4.Data;
+@using Newtonsoft.Json;
+
+@{
+    // Get the worksheet code as a parameter
+    string swimEnglandNumberStr = Model.MacroParameters["swimEnglandNumber"].ToString();
+    string json = "";
+    if (!string.IsNullOrEmpty(swimEnglandNumberStr))
+    {
+        IList<IList<Object>> values = GoogleSheet.Read(GoogleSheet.spreadSheets["swim-data"], swimEnglandNumberStr + "!A2:G");
+        json = JsonConvert.SerializeObject(values);
+    }
+}
+@{
+    @Html.Raw(json)
+}

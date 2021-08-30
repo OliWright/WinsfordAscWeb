@@ -1,0 +1,18 @@
+﻿@inherits UmbracoTemplatePage
+@using Umbraco.Web.Models;
+@{
+    int itemId;
+    if (!int.TryParse(Request.QueryString["itemId"],out itemId))
+    {
+        itemId = -1;
+    }
+    var newsItemMacroParameters = new { itemId = itemId };
+}
+@if( itemId == -1 )
+{
+    <p>Something has gone terribly wrong.  Please tell Oli.</p>
+}
+else
+{
+    @Umbraco.RenderMacro("InfiniteScrollItem", newsItemMacroParameters )
+}

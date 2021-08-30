@@ -1,0 +1,95 @@
+﻿@* Macro to cache access to the swim data Google sheet index XML *@
+@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@using System.Xml;
+@using Winsford;
+@functions{
+    public enum Column
+    {
+        eSwimEnglandNumber,
+        eFirstName,
+        eKnownAs,
+        eLastName,
+        eGender,
+        eDateOfBirth,
+    }
+
+    public static string GetStringValue(IList<Object> row, Column column)
+    {
+        return GoogleSheet.GetStringValue(row, (int)column);
+    }
+}
+@{
+    // Create the index Xml document. This is what we're going to output eventually.
+    // TODO: Just use JSON all the way
+    XmlDocument indexDoc = new XmlDocument();
+
+    XmlDeclaration xmlDeclaration = indexDoc.CreateXmlDeclaration("1.0", "UTF-8", null);
+    XmlElement root = indexDoc.DocumentElement;
+    indexDoc.InsertBefore(xmlDeclaration, root);
+
+    XmlElement indexRoot = indexDoc.CreateElement("swimmers");
+    indexDoc.AppendChild(indexRoot);
+
+    // Get the swimmer list from the index page of the swim data spreadsheet
+    IList<IList<Object>> swimmers = GoogleSheet.Read(GoogleSheet.spreadSheets["swim-data"], "Index!A2:F");
+
+    IPublishedContent ignoreAsaNumbersContent = UmbracoContext.ContentCache.GetByRoute("/data/ignore-asa-numbers");
+    string ignoreListStr = ignoreAsaNumbersContent.GetPropertyValue<string>("text");
+
+    HashSet<int> ignoreAsaNumbers = new HashSet<int>();
+    using (StringReader reader = new StringReader(ignoreListStr))
+    {
+        string line = string.Empty;
+        do
+        {
+            line = reader.ReadLine();
+            if (line != null)
+            {
+                int asaNumber;
+                if (Int32.TryParse(line, out asaNumber))
+                {
+                    ignoreAsaNumbers.Add(asaNumber);
+                }
+            }
+        } while (line != null);
+    }
+
+    foreach (IList<Object> swimmer in swimmers)
+    {
+        int asaNumber = Int32.Parse(GetStringValue(swimmer, Column.eSwimEnglandNumber));
+        if (!ignoreAsaNumbers.Contains(asaNumber))
+        {
+            string firstName = GetStringValue(swimmer, Column.eFirstName);
+            string lastName = GetStringValue(swimmer, Column.eLastName);
+            string knownAs = GetStringValue(swimmer, Column.eKnownAs);
+            string gender = GetStringValue(swimmer, Column.eGender);
+            string dateOfBirth = GetStringValue(swimmer, Column.eDateOfBirth);
+            XmlElement swimmerElement = indexDoc.CreateElement("swimmer");
+            indexRoot.AppendChild(swimmerElement);
+
+            XmlElement element = indexDoc.CreateElement("asaNumber");
+            element.AppendChild(indexDoc.CreateTextNode(asaNumber.ToString()));
+            swimmerElement.AppendChild(element);
+
+            element = indexDoc.CreateElement("firstName");
+            element.AppendChild(indexDoc.CreateTextNode(firstName));
+            swimmerElement.AppendChild(element);
+
+            element = indexDoc.CreateElement("knownAs");
+            element.AppendChild(indexDoc.CreateTextNode(knownAs));
+            swimmerElement.AppendChild(element);
+
+            element = indexDoc.CreateElement("lastName");
+            element.AppendChild(indexDoc.CreateTextNode(lastName));
+            swimmerElement.AppendChild(element);
+
+            element = indexDoc.CreateElement("gender");
+            element.AppendChild(indexDoc.CreateTextNode(gender));
+            swimmerElement.AppendChild(element);
+
+            element = indexDoc.CreateElement("dateOfBirth");
+            element.AppendChild(indexDoc.CreateTextNode(dateOfBirth));
+            swimmerElement.AppendChild(element);
+        }
+    }
+}@Html.Raw(indexDoc.OuterXml)

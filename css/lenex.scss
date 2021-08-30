@@ -1,0 +1,310 @@
+//
+// Stylesheet for use with lenex-render.js
+//
+
+// Globals for easy customisation
+$font-primary: 'Open Sans', sans-serif;
+
+$colour-text: #666;
+$colour-heading: #33b;
+$colour-heading2: #55e;
+$colour-background: rgba(170,170,170,.4); // Semi-transparent
+$colour-background-odd: rgba(200,200,200,.4); // Semi-transparent
+$colour-border: black;
+
+@mixin respond-to($media) {
+  @if $media == screen {
+    @media screen { @content; }
+  }
+  @else if $media == print {
+    @media print { @content; }
+  }
+}
+
+// We only want to modify the styles of things that are inside a div
+// of class 'lenex' to avoid polluting things outside our remit.
+.lenex
+{
+    // Establish a base style
+    font-family: $font-primary;
+    font-weight: 400;
+    color: $colour-text;
+    text-size-adjust: 100%;
+    font-size: 12px;
+
+    h2,h5
+    {
+        color: $colour-heading;
+    }
+    h1,h3,h4
+    {
+        color: $colour-heading2;
+    }
+
+    h1,h2,h3,h4,h5
+    {
+        font-size: 1em;
+        margin-top: 0.1em;
+        margin-bottom: 0.1em;
+        font-weight: bold;
+        line-height: 1.5em;
+    }
+    h1 // Title
+    {
+        font-size: 2em;
+        font-style: italic;
+        text-align: center;
+    }
+    h2 // Controls / Session
+    {
+        line-height: 2em;
+        font-style: italic;
+        font-size: 1.75em;
+    }
+    h3 // Event
+    {
+        font-size: 1.5em;
+    }
+    h4 // Heat
+    {
+        font-size: 1.25em;
+    }
+    p
+    {
+        margin-top: 0;
+        margin-bottom: 0.1em;
+    }
+
+    #controls
+    {
+        input
+        {
+            //margin-right: 1em;
+        }
+    }
+
+    .hidden { display: none; }
+
+    // Layout of index and results
+    .flex-container
+    {
+        display: flex;
+        //display: grid;
+        //column-width: 30em;
+        flex-flow: row nowrap;
+        align-items: flex-start;
+        justify-content: center;
+        //flex-grow: 1;
+    }
+
+    // Index and result panes
+    .pane
+    {
+        //break-inside: avoid;
+        padding: 0.2em;
+        margin: 0.5em;
+        @include respond-to(screen)
+        {
+            background-color: $colour-background;
+            border: 2px solid $colour-border;
+            border-radius: 4px;
+        }
+    }
+
+    // Make separate session panes all equal width and height
+    .flex-container.separate-sessions
+    {
+        flex-flow: row wrap;
+        align-items: initial;
+        justify-content: initial;
+
+        // To combat the extra margins that we get inside the flex container...
+        padding-left: 0.25em;
+        padding-right: 0.25em;
+        .pane
+        {
+            margin-top : 0;
+            margin-bottom: 0.5em;
+            margin-left: 0.25em;
+            margin-right: 0.25em;
+        }
+    }
+
+    // Make separate session panes all equal width and height,
+    // but allow them to grow or shrink to fill available space
+    .separate-sessions .pane
+    {
+        flex: 1 1 auto;
+        //max-width : 100em;
+        width : 30em;
+    }
+
+    // 'Event XXX:' hanging indent using a table
+    table.event-title
+    {
+        border: 0 none black;
+        border-spacing: 0;
+        tr
+        {
+            border: 0 none black;
+        }
+        td:nth-child(1)
+        {
+            width : 8em;
+            vertical-align: top;
+        }
+    }
+
+    .startlists,.results,.results-by-heat
+    {
+        table
+        {
+            //width: 100%;
+            //border: 0 none black;
+            border-spacing: 0;
+            //border-collapse: collapse;
+        }
+        .place
+        {
+            //width : 1.5em;
+            font-weight: bold;
+        }
+        td,th
+        {
+            text-align : left;
+            padding-left : 0.4em;
+            padding-right : 0.4em;
+        }
+        //.name  { width : 15em; }
+        //.yob   { width : 3em; }
+        //.age   { width : 2em; }
+    }
+
+    // Alternate the table background colours.
+    // This rules are inserted in customiseLenexCSS (in lenex-render.js), but this scss can be used to generate
+    // the correct rules in the css.
+    //.odd
+    //{
+    //    background-color: $colour-background-odd;
+    //}
+
+
+    .splits
+    {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+        p
+        {
+            width : 8em;
+            //margin-left: 0.5em;
+            //margin-right: 0.5em;
+        }
+    }
+
+    // Hide split types as appropriate for the splits-xxx classes
+    .splits-off
+    {
+        // This isn't so much 'off', as click-to-show
+        .splits-row { display: none; }
+        .splits-row.show
+        {
+            display: table-row;
+            .time { display: flex; }
+            .interval { display: none; }
+        }
+        .splits-row.show.interval
+        {
+            display: table-row;
+            .time { display: none; }
+            .interval { display: flex; }
+        }
+    }
+    .splits-interval .splits.time { display: none; }
+    .splits-time .splits.interval { display: none; }
+
+    // Hide things as appropriate for the show-xxx classes
+    .show-auto
+    {
+        .results,.results-by-heat { display: none; }
+        .has-results
+        {
+            .results { display: block; }
+            .startlists { display: none; }
+        }
+    }
+    .show-startlists
+    {
+        .results,.results-by-heat { display: none; }
+    }
+    .show-results
+    {
+        .startlists,.results-by-heat { display: none; }
+    }
+    .show-results-by-heat
+    {
+        .startlists,.results { display: none; }
+    }
+
+    #background-image
+    {
+        @include respond-to(printer)
+        {
+            display: none;
+        }
+        position: fixed;
+        z-index: -1;
+        filter: opacity(20%);
+    }
+
+    // When printing, hide the controls and display the results in two columns
+    @include respond-to(print)
+    {
+        #controls { display: none; }
+        #index { column-count: 2; }
+    }
+
+    @include respond-to(screen)
+    {
+        .expand-selected
+        {
+            // Hide the startlists/results for events that the user hasn't expanded
+            .closed
+            {
+                display: none;
+            }
+        }
+    }
+}
+
+.lenex.separate-results
+{
+    .only-inline-results
+    {
+        display: none;
+    }
+    .pane
+    {
+        flex: 1 1 auto;
+    }
+    #index .results
+    {
+        display: none;
+    }
+}
+
+.lenex.inline-results
+{
+    //font-size: 3vw;
+
+    .only-separate-results
+    {
+        display: none;
+    }
+    .pane
+    {
+    }
+}
+

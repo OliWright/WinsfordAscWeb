@@ -1,0 +1,45 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+@using System.Web.Mvc.Html
+@using ClientDependency.Core.Mvc
+@using Umbraco.Web
+@using Umbraco.Web.Models
+@using Umbraco.Web.Controllers
+
+@{
+    var loginStatusModel = Members.GetCurrentLoginStatus();
+
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
+    Html.RequiresJs("/umbraco_client/ui/jquery.js");
+    Html.RequiresJs("/umbraco_client/Application/JQuery/jquery.validate.min.js");
+    Html.RequiresJs("/umbraco_client/Application/JQuery/jquery.validate.unobtrusive.min.js");
+
+    var logoutModel = new PostRedirectModel();
+    
+    @*
+        Here you can specify a redirect URL for after logging out, by default umbraco will simply
+        redirect to the current page. Example to redirect to the home page:
+        
+        logoutModel.RedirectUrl = "/"; 
+    *@
+    logoutModel.RedirectUrl = "/"; 
+}
+@*<div class="login-status">*@
+@if (loginStatusModel.IsLoggedIn)
+{
+	<p>@(loginStatusModel.Name)</p>
+		
+	@* I really want to get this in a <span> element so it appears in-line with the logged in message
+	but I'm really struggling to make that work *@
+	using (Html.BeginUmbracoForm<UmbLoginStatusController>("HandleLogout"))
+    {
+        <input class="button" type="submit" value="Logout">
+		@Html.HiddenFor(m => logoutModel.RedirectUrl)
+    }
+}
+else
+{
+	<a id="login-link" href="/login">Login</a>
+}
+@*</div>*@

@@ -1,0 +1,86 @@
+@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@using System.Xml;
+@using Winsford;
+
+@{
+    // Load the google spreadsheet containing all the emergency contact details as XML
+    IList<IList<Object>> values = GoogleSheet.Read(GoogleSheet.spreadSheets["members"], "Current Members!A2:T");
+}
+
+
+@functions{
+    public enum Column
+    {
+        eFirstName,
+		eLastName,
+		eAccount,
+		eMedicalInfo,
+		eContact1,
+		eContactTel1,
+		eContact2,
+		eContactTel2,
+		eContact3,
+		eContactTel3,
+		eContact4,
+		eContactTel4,
+		eAsaNumber,
+		eDateOfBirth,
+		eCategory,
+		eSquad,
+		eLessonsTime,
+		eLessoneLane,
+		eHomeTelephone,
+		eNotes,
+    }
+
+    public static string GetStringValue(IList<Object> row, Column column)
+    {
+        return GoogleSheet.GetStringValue(row, (int)column);
+    }
+}
+
+@helper Contact( string name, string phoneNumber )
+{
+    if( (name.Length > 0) || (phoneNumber.Length > 0) )
+    {
+        <tr>
+            <td>@name</td>
+            <td>
+                @if(phoneNumber.Length > 0)
+                {
+                    <a href="tel:@phoneNumber">@phoneNumber</a>
+                }
+            </td>
+        </tr>
+    }
+}
+
+@helper Info( string label, string info )
+{
+    if( info.Length > 0 )
+    {
+        <tr><td colspan="2"><strong>@label: </strong>@info</td></tr>
+    }
+}
+
+@foreach (IList<Object> row in values)
+{
+    string firstName = GetStringValue(row, Column.eFirstName);
+    string lastName = GetStringValue(row, Column.eLastName);
+    string id = new string( (firstName + lastName).Where(Char.IsLetter).ToArray());
+    string medicalInfo = GetStringValue(row, Column.eMedicalInfo);
+    bool hasMedical = (medicalInfo.Length > 0) && (medicalInfo != "None");
+    string htmlClass = hasMedical ? "has-medical-info" : "no-medical-info";
+    <p class='@htmlClass' onclick='$("#@id").toggle()'>@firstName @lastName</p>
+    <table id='@id' class='emergency-details' style='display:none;'><tbody>
+        @if( hasMedical )
+        {
+            <tr><td colspan="2"><strong>Medical: </strong>@medicalInfo</td></tr>
+        }
+        @Info( "Notes", GetStringValue(row, Column.eNotes) )
+        @Contact( GetStringValue(row, Column.eContact1), GetStringValue(row, Column.eContactTel1) )
+        @Contact( GetStringValue(row, Column.eContact2), GetStringValue(row, Column.eContactTel2) )
+        @Contact( GetStringValue(row, Column.eContact3), GetStringValue(row, Column.eContactTel3) )
+        @Contact( GetStringValue(row, Column.eContact4), GetStringValue(row, Column.eContactTel4) )
+    </tbody></table>
+}

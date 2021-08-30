@@ -1,0 +1,619 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\UmbracoCms.7.15.7\build\UmbracoCms.props" Condition="Exists('packages\UmbracoCms.7.15.7\build\UmbracoCms.props')" />
+  <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DCBDDE78-6A3D-42F0-B789-65E9C9E79926}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WinsfordWeb7</RootNamespace>
+    <AssemblyName>WinsfordWeb7</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44323</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="businesslogic, Version=1.0.7706.20575, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UmbracoCms.Core.7.15.7\lib\net452\businesslogic.dll</HintPath>
+    </Reference>
+    <Reference Include="ClientDependency.Core, Version=1.9.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ClientDependency.1.9.9\lib\net45\ClientDependency.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ClientDependency.Core.Mvc, Version=1.9.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ClientDependency-Mvc5.1.9.3\lib\net45\ClientDependency.Core.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="cms, Version=1.0.7706.20575, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UmbracoCms.Core.7.15.7\lib\net452\cms.dll</HintPath>
+    </Reference>
+    <Reference Include="controls, Version=1.0.7706.20576, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UmbracoCms.Core.7.15.7\lib\net452\controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Examine, Version=0.1.90.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Examine.0.1.90\lib\net45\Examine.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis, Version=1.54.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>packages\Google.Apis.1.54.0\lib\net45\Google.Apis.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth, Version=1.54.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>packages\Google.Apis.Auth.1.54.0\lib\net461\Google.Apis.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.54.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>packages\Google.Apis.Auth.1.54.0\lib\net461\Google.Apis.Auth.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Core, Version=1.54.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>packages\Google.Apis.Core.1.54.0\lib\net45\Google.Apis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.54.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>packages\Google.Apis.1.54.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Sheets.v4, Version=1.54.0.2371, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>packages\Google.Apis.Sheets.v4.1.54.0.2371\lib\net45\Google.Apis.Sheets.v4.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.8.8.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>packages\HtmlAgilityPack.1.8.8\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageProcessor, Version=2.7.0.100, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ImageProcessor.2.7.0.100\lib\net452\ImageProcessor.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageProcessor.Web, Version=4.10.0.100, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ImageProcessor.Web.4.10.0.100\lib\net452\ImageProcessor.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="interfaces, Version=1.0.7706.20568, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UmbracoCms.Core.7.15.7\lib\net452\interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>packages\UmbracoCms.Core.7.15.7\lib\net452\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Log4Net.Async, Version=2.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Log4Net.Async.2.0.4\lib\net40\Log4Net.Async.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net, Version=2.9.4.1, Culture=neutral, PublicKeyToken=85089178b9ac3181, processorArchitecture=MSIL">
+      <HintPath>packages\Lucene.Net.2.9.4.1\lib\net40\Lucene.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="MarkdownSharp, Version=1.14.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Markdown.1.14.7\lib\net45\MarkdownSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationBlocks.Data, Version=1.0.1559.20655, Culture=neutral">
+      <HintPath>packages\UmbracoCms.Core.7.15.7\lib\net452\Microsoft.ApplicationBlocks.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.Identity.Core.2.2.2\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.Identity.Owin.2.2.2\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.SignalR.Core.2.4.1\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.CodeAnalysis.Common.1.0.0\lib\net45\Microsoft.CodeAnalysis.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeAnalysis.CSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.CodeAnalysis.CSharp.1.0.0\lib\net45\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.IO.RecyclableMemoryStream.1.2.2\lib\net45\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Owin.4.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Owin.Host.SystemWeb.4.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Owin.Security.4.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Owin.Security.Cookies.4.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Owin.Security.OAuth.4.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="MiniProfiler, Version=2.1.0.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+      <HintPath>packages\MiniProfiler.2.1.0\lib\net40\MiniProfiler.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.12.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>packages\MySql.Data.6.9.12\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenPop, Version=2.0.6.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\OpenPop.2.0.6.2\lib\net20\OpenPop.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Semver, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\semver.1.1.2\lib\net451\Semver.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLCE4Umbraco, Version=1.0.7706.20576, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UmbracoCms.Core.7.15.7\lib\net452\SQLCE4Umbraco.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=1.1.36.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Collections.Immutable.1.1.36\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.1, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\UmbracoCms.Core.7.15.7\lib\net452\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlServerCe.Entity, Version=4.0.0.1, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\UmbracoCms.Core.7.15.7\lib\net452\System.Data.SqlServerCe.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reflection.Metadata, Version=1.0.21.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Reflection.Metadata.1.0.21\lib\portable-net45+win8\System.Reflection.Metadata.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks.Dataflow, Version=4.6.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Threading.Tasks.Dataflow.4.9.0\lib\netstandard2.0\System.Threading.Tasks.Dataflow.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="TidyNet, Version=1.0.0.0, Culture=neutral">
+      <HintPath>packages\UmbracoCms.Core.7.15.7\lib\net452\TidyNet.dll</HintPath>
+    </Reference>
+    <Reference Include="umbraco, Version=1.0.7706.20577, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UmbracoCms.Core.7.15.7\lib\net452\umbraco.dll</HintPath>
+    </Reference>
+    <Reference Include="Umbraco.Core, Version=1.0.7706.20570, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UmbracoCms.Core.7.15.7\lib\net452\Umbraco.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="umbraco.DataLayer, Version=1.0.7706.20574, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UmbracoCms.Core.7.15.7\lib\net452\umbraco.DataLayer.dll</HintPath>
+    </Reference>
+    <Reference Include="umbraco.editorControls, Version=1.0.7706.20582, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UmbracoCms.Core.7.15.7\lib\net452\umbraco.editorControls.dll</HintPath>
+    </Reference>
+    <Reference Include="umbraco.MacroEngines, Version=1.0.7706.20582, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UmbracoCms.Core.7.15.7\lib\net452\umbraco.MacroEngines.dll</HintPath>
+    </Reference>
+    <Reference Include="Umbraco.ModelsBuilder, Version=3.0.10.102, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Umbraco.ModelsBuilder.3.0.10\lib\Umbraco.ModelsBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="umbraco.providers, Version=1.0.7706.20577, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UmbracoCms.Core.7.15.7\lib\net452\umbraco.providers.dll</HintPath>
+    </Reference>
+    <Reference Include="Umbraco.Web.UI, Version=1.0.7706.20585, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UmbracoCms.Core.7.15.7\lib\net452\Umbraco.Web.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UmbracoExamine, Version=0.7.0.20576, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UmbracoCms.Core.7.15.7\lib\net452\UmbracoExamine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.controller.js" />
+    <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.htm" />
+    <Content Include="App_Plugins\ModelsBuilder\modelsbuilder.resource.js" />
+    <Content Include="config\grid.editors.config.js" />
+    <Content Include="config\Lang\cs-CZ.user.xml" />
+    <Content Include="config\Lang\da-DK.user.xml" />
+    <Content Include="config\Lang\de-DE.user.xml" />
+    <Content Include="config\Lang\en-GB.user.xml" />
+    <Content Include="config\Lang\en-US.user.xml" />
+    <Content Include="config\Lang\es-ES.user.xml" />
+    <Content Include="config\Lang\fr-FR.user.xml" />
+    <Content Include="config\Lang\he-IL.user.xml" />
+    <Content Include="config\Lang\it-IT.user.xml" />
+    <Content Include="config\Lang\ja-JP.user.xml" />
+    <Content Include="config\Lang\ko-KR.user.xml" />
+    <Content Include="config\Lang\nb-NO.user.xml" />
+    <Content Include="config\Lang\nl-NL.user.xml" />
+    <Content Include="config\Lang\pl-PL.user.xml" />
+    <Content Include="config\Lang\pt-BR.user.xml" />
+    <Content Include="config\Lang\ru-RU.user.xml" />
+    <Content Include="config\Lang\sv-SE.user.xml" />
+    <Content Include="config\Lang\zh-CN.user.xml" />
+    <Content Include="default.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="js\config.js" />
+    <Content Include="js\events.js" />
+    <Content Include="js\gallery.js" />
+    <Content Include="js\helpers.js" />
+    <Content Include="js\highcharts\css\highcharts.css" />
+    <Content Include="js\highcharts\highcharts-3d.js" />
+    <Content Include="js\highcharts\highcharts-3d.src.js" />
+    <Content Include="js\highcharts\highcharts-more.js" />
+    <Content Include="js\highcharts\highcharts-more.src.js" />
+    <Content Include="js\highcharts\highcharts.js" />
+    <Content Include="js\highcharts\highcharts.src.js" />
+    <Content Include="js\highcharts\js\highcharts-3d.js" />
+    <Content Include="js\highcharts\js\highcharts-3d.src.js" />
+    <Content Include="js\highcharts\js\highcharts-more.js" />
+    <Content Include="js\highcharts\js\highcharts-more.src.js" />
+    <Content Include="js\highcharts\js\highcharts.js" />
+    <Content Include="js\highcharts\js\highcharts.src.js" />
+    <Content Include="js\highcharts\js\modules\accessibility.js" />
+    <Content Include="js\highcharts\js\modules\accessibility.src.js" />
+    <Content Include="js\highcharts\js\modules\annotations.js" />
+    <Content Include="js\highcharts\js\modules\annotations.src.js" />
+    <Content Include="js\highcharts\js\modules\boost-canvas.js" />
+    <Content Include="js\highcharts\js\modules\boost-canvas.src.js" />
+    <Content Include="js\highcharts\js\modules\boost.js" />
+    <Content Include="js\highcharts\js\modules\boost.src.js" />
+    <Content Include="js\highcharts\js\modules\broken-axis.js" />
+    <Content Include="js\highcharts\js\modules\broken-axis.src.js" />
+    <Content Include="js\highcharts\js\modules\data.js" />
+    <Content Include="js\highcharts\js\modules\data.src.js" />
+    <Content Include="js\highcharts\js\modules\drilldown.js" />
+    <Content Include="js\highcharts\js\modules\drilldown.src.js" />
+    <Content Include="js\highcharts\js\modules\exporting.js" />
+    <Content Include="js\highcharts\js\modules\exporting.src.js" />
+    <Content Include="js\highcharts\js\modules\funnel.js" />
+    <Content Include="js\highcharts\js\modules\funnel.src.js" />
+    <Content Include="js\highcharts\js\modules\gantt.js" />
+    <Content Include="js\highcharts\js\modules\gantt.src.js" />
+    <Content Include="js\highcharts\js\modules\grid-axis.js" />
+    <Content Include="js\highcharts\js\modules\grid-axis.src.js" />
+    <Content Include="js\highcharts\js\modules\heatmap.js" />
+    <Content Include="js\highcharts\js\modules\heatmap.src.js" />
+    <Content Include="js\highcharts\js\modules\no-data-to-display.js" />
+    <Content Include="js\highcharts\js\modules\no-data-to-display.src.js" />
+    <Content Include="js\highcharts\js\modules\offline-exporting.js" />
+    <Content Include="js\highcharts\js\modules\offline-exporting.src.js" />
+    <Content Include="js\highcharts\js\modules\overlapping-datalabels.js" />
+    <Content Include="js\highcharts\js\modules\overlapping-datalabels.src.js" />
+    <Content Include="js\highcharts\js\modules\series-label.js" />
+    <Content Include="js\highcharts\js\modules\series-label.src.js" />
+    <Content Include="js\highcharts\js\modules\solid-gauge.js" />
+    <Content Include="js\highcharts\js\modules\solid-gauge.src.js" />
+    <Content Include="js\highcharts\js\modules\static-scale.js" />
+    <Content Include="js\highcharts\js\modules\static-scale.src.js" />
+    <Content Include="js\highcharts\js\modules\stock.js" />
+    <Content Include="js\highcharts\js\modules\stock.src.js" />
+    <Content Include="js\highcharts\js\modules\treemap.js" />
+    <Content Include="js\highcharts\js\modules\treemap.src.js" />
+    <Content Include="js\highcharts\js\modules\xrange-series.js" />
+    <Content Include="js\highcharts\js\modules\xrange-series.src.js" />
+    <Content Include="js\highcharts\js\themes\dark-blue.js" />
+    <Content Include="js\highcharts\js\themes\dark-green.js" />
+    <Content Include="js\highcharts\js\themes\dark-unica.js" />
+    <Content Include="js\highcharts\js\themes\gray.js" />
+    <Content Include="js\highcharts\js\themes\grid-light.js" />
+    <Content Include="js\highcharts\js\themes\grid.js" />
+    <Content Include="js\highcharts\js\themes\sand-signika.js" />
+    <Content Include="js\highcharts\js\themes\skies.js" />
+    <Content Include="js\highcharts\lib\canvg.js" />
+    <Content Include="js\highcharts\lib\canvg.src.js" />
+    <Content Include="js\highcharts\lib\jspdf.js" />
+    <Content Include="js\highcharts\lib\jspdf.src.js" />
+    <Content Include="js\highcharts\lib\rgbcolor.js" />
+    <Content Include="js\highcharts\lib\rgbcolor.src.js" />
+    <Content Include="js\highcharts\lib\svg2pdf.js" />
+    <Content Include="js\highcharts\lib\svg2pdf.src.js" />
+    <Content Include="js\highcharts\modules\accessibility.js" />
+    <Content Include="js\highcharts\modules\accessibility.src.js" />
+    <Content Include="js\highcharts\modules\annotations.js" />
+    <Content Include="js\highcharts\modules\annotations.src.js" />
+    <Content Include="js\highcharts\modules\boost-canvas.js" />
+    <Content Include="js\highcharts\modules\boost-canvas.src.js" />
+    <Content Include="js\highcharts\modules\boost.js" />
+    <Content Include="js\highcharts\modules\boost.src.js" />
+    <Content Include="js\highcharts\modules\broken-axis.js" />
+    <Content Include="js\highcharts\modules\broken-axis.src.js" />
+    <Content Include="js\highcharts\modules\data.js" />
+    <Content Include="js\highcharts\modules\data.src.js" />
+    <Content Include="js\highcharts\modules\drilldown.js" />
+    <Content Include="js\highcharts\modules\drilldown.src.js" />
+    <Content Include="js\highcharts\modules\exporting.js" />
+    <Content Include="js\highcharts\modules\exporting.src.js" />
+    <Content Include="js\highcharts\modules\funnel.js" />
+    <Content Include="js\highcharts\modules\funnel.src.js" />
+    <Content Include="js\highcharts\modules\gantt.js" />
+    <Content Include="js\highcharts\modules\gantt.src.js" />
+    <Content Include="js\highcharts\modules\grid-axis.js" />
+    <Content Include="js\highcharts\modules\grid-axis.src.js" />
+    <Content Include="js\highcharts\modules\heatmap.js" />
+    <Content Include="js\highcharts\modules\heatmap.src.js" />
+    <Content Include="js\highcharts\modules\no-data-to-display.js" />
+    <Content Include="js\highcharts\modules\no-data-to-display.src.js" />
+    <Content Include="js\highcharts\modules\offline-exporting.js" />
+    <Content Include="js\highcharts\modules\offline-exporting.src.js" />
+    <Content Include="js\highcharts\modules\overlapping-datalabels.js" />
+    <Content Include="js\highcharts\modules\overlapping-datalabels.src.js" />
+    <Content Include="js\highcharts\modules\series-label.js" />
+    <Content Include="js\highcharts\modules\series-label.src.js" />
+    <Content Include="js\highcharts\modules\solid-gauge.js" />
+    <Content Include="js\highcharts\modules\solid-gauge.src.js" />
+    <Content Include="js\highcharts\modules\static-scale.js" />
+    <Content Include="js\highcharts\modules\static-scale.src.js" />
+    <Content Include="js\highcharts\modules\stock.js" />
+    <Content Include="js\highcharts\modules\stock.src.js" />
+    <Content Include="js\highcharts\modules\treemap.js" />
+    <Content Include="js\highcharts\modules\treemap.src.js" />
+    <Content Include="js\highcharts\modules\xrange-series.js" />
+    <Content Include="js\highcharts\modules\xrange-series.src.js" />
+    <Content Include="js\highcharts\readme.txt" />
+    <Content Include="js\highcharts\themes\dark-blue.js" />
+    <Content Include="js\highcharts\themes\dark-green.js" />
+    <Content Include="js\highcharts\themes\dark-unica.js" />
+    <Content Include="js\highcharts\themes\gray.js" />
+    <Content Include="js\highcharts\themes\grid-light.js" />
+    <Content Include="js\highcharts\themes\grid.js" />
+    <Content Include="js\highcharts\themes\sand-signika.js" />
+    <Content Include="js\highcharts\themes\skies.js" />
+    <Content Include="js\html5shiv.js" />
+    <Content Include="js\jquery.min.js" />
+    <Content Include="js\lenex-parse.es5.js" />
+    <Content Include="js\lenex-parse.es5.min.js" />
+    <Content Include="js\lenex-parse.js" />
+    <Content Include="js\lenex-render.es5.js" />
+    <Content Include="js\lenex-render.es5.min.js" />
+    <Content Include="js\lenex-render.js" />
+    <Content Include="js\NoSleep.js" />
+    <Content Include="js\NoSleep.min.js" />
+    <Content Include="js\photoswipe-ui-default.js" />
+    <Content Include="js\photoswipe-ui-default.min.js" />
+    <Content Include="js\photoswipe.js" />
+    <Content Include="js\photoswipe.min.js" />
+    <Content Include="js\skel-panels-oli.js" />
+    <Content Include="js\skel-panels.min.js" />
+    <Content Include="js\skel.js" />
+    <Content Include="js\skel.min.js" />
+    <Content Include="js\stopwatch.js" />
+    <Content Include="js\swim-data.js" />
+    <Content Include="js\time-conversion.js" />
+    <Content Include="js\video-quality-selector.js" />
+    <Content Include="js\video.js" />
+    <Content Include="js\wasc.js" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Code\ChangePassword.cs" />
+    <Content Include="App_Code\NewContentNotification.cs" />
+    <Content Include="App_Code\NewMemberNotification.cs" />
+    <Content Include="App_Code\ReceiveEmail.cs" />
+    <Content Include="App_Code\GoogleSheet.cs" />
+    <Content Include="App_Code\Search.cs" />
+    <Compile Include="App_Data\Models\Data.generated.cs" />
+    <Compile Include="App_Data\Models\Directory.generated.cs" />
+    <Compile Include="App_Data\Models\File.generated.cs" />
+    <Compile Include="App_Data\Models\Folder.generated.cs" />
+    <Compile Include="App_Data\Models\Gala.generated.cs" />
+    <Compile Include="App_Data\Models\HtmlWrapper.generated.cs" />
+    <Compile Include="App_Data\Models\Image.generated.cs" />
+    <Compile Include="App_Data\Models\Login.generated.cs" />
+    <Compile Include="App_Data\Models\Member.generated.cs" />
+    <Compile Include="App_Data\Models\PlainText.generated.cs" />
+    <Compile Include="App_Data\Models\Redirect.generated.cs" />
+    <Compile Include="App_Data\Models\Register.generated.cs" />
+    <Compile Include="App_Data\Models\Trigger.generated.cs" />
+    <Compile Include="App_Data\Models\UmbHomePage.generated.cs" />
+    <Compile Include="App_Data\Models\UmbMaster.generated.cs" />
+    <Compile Include="App_Data\Models\UmbNewsItem.generated.cs" />
+    <Compile Include="App_Data\Models\UmbNewsOverview.generated.cs" />
+    <Compile Include="App_Data\Models\UmbTextPage.generated.cs" />
+    <Compile Include="App_Data\Models\UpdateNotification.generated.cs" />
+    <Compile Include="App_Data\Models\UpdateNotificationCollection.generated.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="config\imageprocessor\security.config" />
+    <Content Include="config\imageprocessor\processing.config" />
+    <Content Include="config\imageprocessor\cache.config" />
+    <Content Include="App_Plugins\ModelsBuilder\package.manifest" />
+    <Content Include="Media\Web.config" />
+    <Content Include="config\umbracoSettings.config" />
+    <Content Include="config\trees.config" />
+    <Content Include="config\tinyMceConfig.config" />
+    <Content Include="config\scripting.config" />
+    <Content Include="config\log4net.config" />
+    <Content Include="config\HealthChecks.config" />
+    <Content Include="config\FileSystemProviders.config" />
+    <Content Include="config\feedProxy.config" />
+    <Content Include="config\EmbeddedMedia.config" />
+    <Content Include="config\Dashboard.config" />
+    <Content Include="config\ClientDependency.config" />
+    <Content Include="config\BaseRestExtensions.config" />
+    <Content Include="config\BackOfficeTours\getting-started.json" />
+    <Content Include="config\applications.config" />
+    <Content Include="config\404handlers.config" />
+    <Content Include="authorize.cshtml" />
+    <Content Include="config\connectionStrings.config" />
+    <Content Include="config\mailSettings.config" />
+    <None Include="packages.config" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Calendar.cshtml" />
+    <Content Include="Views\CheckEmails.cshtml" />
+    <Content Include="Views\Data.cshtml" />
+    <Content Include="Views\EditProfile.cshtml" />
+    <Content Include="Views\EmergencyContactDetails.cshtml" />
+    <Content Include="Views\Gala.cshtml" />
+    <Content Include="Views\HtmlWrapper.cshtml" />
+    <Content Include="Views\InfiniteScrollItem.cshtml" />
+    <Content Include="Views\InfiniteScrollNews.cshtml" />
+    <Content Include="Views\Login.cshtml" />
+    <Content Include="Views\PersonalBests.cshtml" />
+    <Content Include="Views\Register.cshtml" />
+    <Content Include="Views\SportSysResults.cshtml" />
+    <Content Include="Views\SwimData.cshtml" />
+    <Content Include="Views\SwimDataIndex.cshtml" />
+    <Content Include="Views\TimeConversion.cshtml" />
+    <Content Include="Views\umbHomePage.cshtml" />
+    <Content Include="Views\umbLayout.cshtml" />
+    <Content Include="Views\umbNewsItem.cshtml" />
+    <Content Include="Views\umbNewsOverview.cshtml" />
+    <Content Include="Views\umbTextPage.cshtml" />
+    <Content Include="Views\Partials\footer.cshtml" />
+    <Content Include="Views\Partials\gallery.cshtml" />
+    <Content Include="Views\Partials\header.cshtml" />
+    <Content Include="Views\Partials\photoSwipe.cshtml" />
+    <Content Include="Views\Partials\standardHead.cshtml" />
+    <Content Include="Views\Partials\umbAbout.cshtml" />
+    <Content Include="Views\Partials\umbChildFeatures.cshtml" />
+    <Content Include="Views\Partials\umbFeatures.cshtml" />
+    <Content Include="Views\Partials\umbHomepageBanner.cshtml" />
+    <Content Include="Views\Partials\umbLatestNewsWidget.cshtml" />
+    <Content Include="Views\Partials\umbNewsOverviewWidget.cshtml" />
+    <Content Include="Views\Partials\umbSocial.cshtml" />
+    <Content Include="Views\Partials\umbTopNavigation.cshtml" />
+    <Content Include="Views\Partials\winAllLatestNewsWidget.cshtml" />
+    <Content Include="Views\Partials\winTopNewsOverview.cshtml" />
+    <Content Include="Views\BritishSwimmingVideo.cshtml" />
+    <Content Include="Views\MacroPartials\BritishSwimmingVideo.cshtml" />
+    <Content Include="Views\MacroPartials\Calendar.cshtml" />
+    <Content Include="Views\MacroPartials\EditProfile.cshtml" />
+    <Content Include="Views\MacroPartials\EmergencyContactDetails.cshtml" />
+    <Content Include="Views\MacroPartials\Gallery.cshtml" />
+    <Content Include="Views\MacroPartials\GetSwimData.cshtml" />
+    <Content Include="Views\MacroPartials\GetSwimDataIndex.cshtml" />
+    <Content Include="Views\MacroPartials\GoogleSheetTable.cshtml" />
+    <Content Include="Views\MacroPartials\InfiniteScrollItem.cshtml" />
+    <Content Include="Views\MacroPartials\LenexWebView.cshtml" />
+    <Content Include="Views\MacroPartials\ListChildren.cshtml" />
+    <Content Include="Views\MacroPartials\LiteralHTML.cshtml" />
+    <Content Include="Views\MacroPartials\Login.cshtml" />
+    <Content Include="Views\MacroPartials\LoginRedirectMessage.cshtml" />
+    <Content Include="Views\MacroPartials\LoginStatus.cshtml" />
+    <Content Include="Views\MacroPartials\Pages.cshtml" />
+    <Content Include="Views\MacroPartials\RegisterMember.cshtml" />
+    <Content Include="Views\MacroPartials\SearchResults.cshtml" />
+    <Content Include="Views\MacroPartials\ShowGallery.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
+    <Analyzer Include="packages\Microsoft.CodeAnalysis.Analyzers.1.0.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>64012</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44323/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('packages\UmbracoCms.7.15.7\build\UmbracoCms.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\UmbracoCms.7.15.7\build\UmbracoCms.props'))" />
+    <Error Condition="!Exists('packages\UmbracoCms.7.15.7\build\UmbracoCms.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\UmbracoCms.7.15.7\build\UmbracoCms.targets'))" />
+  </Target>
+  <Import Project="packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
+  <Import Project="packages\UmbracoCms.7.15.7\build\UmbracoCms.targets" Condition="Exists('packages\UmbracoCms.7.15.7\build\UmbracoCms.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

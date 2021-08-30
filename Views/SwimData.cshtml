@@ -1,0 +1,18 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = null;
+    Response.ContentType = "text/json";
+    string swimEnglandNumberStr = Request.QueryString["swimenglandnumber"];
+    string macroResult = Umbraco.RenderMacro("GetSwimData", new { swimEnglandNumber = swimEnglandNumberStr }).ToString();
+    if(macroResult.IsEmpty())
+    {
+        // The data returned from the macro is empty. Something probably went wrong when requesting
+        // the data from the Google spreadsheet.
+        // The problem now is that this empty data is in the Ubraco cache.
+        // So lets clear the cache for that macro, and try again.
+        string cacheRegex = swimEnglandNumberStr;
+        ApplicationContext.ApplicationCache.RuntimeCache.ClearCacheByKeyExpression(cacheRegex);
+        macroResult = Umbraco.RenderMacro("GetSwimData", new { swimEnglandNumber = swimEnglandNumberStr }).ToString();
+    }
+  
+}@Html.Raw(macroResult)

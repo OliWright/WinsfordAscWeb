@@ -1,0 +1,21 @@
+@inherits UmbracoTemplatePage
+
+    <!-- Header -->
+    <img id="background-image" width="100%" src="/images/winsford_logo_background.svg" alt="W"></img>
+    <div id="navigation-wrapper">
+        @{ Html.RenderPartial("umbTopNavigation"); }
+        <header id="header">
+            <div class="logo">
+                <div>
+                    <h1><a href="/" id="logo">@Umbraco.Field("siteName", recursive: true)</a></h1><br>
+                    <p class="byline">@Umbraco.Field("byline", recursive: true)</p>
+                </div>
+            </div>
+            <div id="toggle-menu"></div>
+            <div class="not-desktop" id="search-toggle" onclick="toggleSearch()"></div>
+            <div id="mobile-search" class="not-desktop">
+                <input type="text" id="mobile-search-input" class="search" onchange="search( this.value );"></input>
+            </div>
+        </header>
+    </div>
+    <!-- /Header -->

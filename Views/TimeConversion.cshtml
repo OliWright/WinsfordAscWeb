@@ -1,0 +1,305 @@
+﻿@inherits UmbracoTemplatePage
+@{
+    Layout = "umbLayout.cshtml";
+	// Why does this keep reverting?
+
+    // If the editor has not explicitly provided the "Page title" property page 
+    // then just show the name of the page otherwise show the provided title
+    var pageTitle = string.IsNullOrWhiteSpace(CurrentPage.Title)
+        ? CurrentPage.Name
+        : CurrentPage.Title;    
+}
+<script src="/js/events.js"></script>
+<script src="/js/time-conversion.js"></script>
+<script>
+    var eventSelectorElement;
+    var inputTimeElement;
+    var shortToLongModeElement;
+    var resultElement;
+    var asaTableElement;
+    var inputTimeInSeconds = 0;
+
+    // Convert a race time in seconds to a string of the form minutes:seconds.fractions (to 2 decimal places)
+    function raceTimeToString(raceTime, numDecimalPlaces) {
+        if (numDecimalPlaces === undefined) { numDecimalPlaces = 2; }
+        var minutes = Math.floor(raceTime / 60);
+        var str = "";
+        if (minutes > 0) {
+            var seconds = raceTime - (minutes * 60);
+            str += minutes + ":";
+            if (seconds < 10) {
+                str += "0";
+            }
+            str += seconds.toFixed(numDecimalPlaces);
+        }
+        else {
+            str += raceTime.toFixed(numDecimalPlaces);
+        }
+        return str;
+    }
+
+    // Converts a race time string in the form mm:ss.ff to a time in seconds
+    // To make things complicated, it also parses mm.ss.ff which can make typing
+    // in times easier on a phone.
+    function parseRaceTime(raceTimeStr) {
+        // Count the number of dots
+        var numDots = 0;
+        for (var i = 0; i < raceTimeStr.length; ++i) {
+            if (raceTimeStr[i] == '.') {
+                ++numDots;
+            }
+        }
+
+        if (numDots > 1) {
+            // Text has been entered in the mm.ss.ff format
+            var fields = raceTimeStr.split(".");
+            if (fields.length == 3) {
+                // mm.ss.ff
+                return (parseInt(fields[0]) * 60) + parseInt(fields[1]) + parseFloat('0.' + fields[2]);
+            }
+            else {
+                return 0;
+            }
+        }
+        else {
+            // Normal formatting
+            var fields = raceTimeStr.split(":");
+            if (fields.length > 2) {
+                // Unlikely
+                return 0;
+            }
+            else if (fields.length == 2) {
+                return (parseFloat(fields[0]) * 60) + parseFloat(fields[1]);
+            }
+            else {
+                return parseFloat(fields[0]);
+            }
+        }
+    }
+
+    function roundDown(val, toNearest) {
+        return Math.floor((val + 0.0001) / toNearest) * toNearest;
+    }
+
+    function round(val, toNearest) {
+        return Math.floor((val / toNearest) + 0.50001) * toNearest;
+    }
+
+    // Do the conversion and generate the result HTML
+    function calculateConversion() {
+        inputTimeElement.value = raceTimeToString(inputTimeInSeconds); //< Pretty print the input time
+        if (inputTimeInSeconds == 0) {
+            resultElement.innerHTML = "<p>Result will appear here when you enter a time</p>";
+        }
+        else {
+            var eventIndex = parseInt(eventSelectorElement.selectedIndex)
+            var pureConversion;
+            var tableEmulationConversion = 0;
+            var originalCourse;
+            var tablePrecision = 0.1;
+            var tableShortCourseA, tableShortCourseB, tableLongCourseA, tableLongCourseB;
+            if (shortToLongModeElement.checked) {
+                pureConversion = convertShortCourseToLongCourse(eventIndex, inputTimeInSeconds);
+                originalCourse = 'short';
+
+                // Emulate a table-based conversion
+                // Find the two table rows that span our actual time.
+                // This is actually harder than it sounds, because we need to convert to long course
+                // but we don't know the step size of the table at this point
+                tableLongCourseB = roundDown(pureConversion, 1);
+                tableShortCourseB = round(convertLongCourseToShortCourse(eventIndex, tableLongCourseB), 0.1);
+                var tableStep;
+                do {
+                    tableShortCourseA = tableShortCourseB;
+                    tableLongCourseA = tableLongCourseB;
+                    tableStep = getAsaTableStep(eventIndex, tableLongCourseA);
+                    tableLongCourseB = roundDown(tableLongCourseB + tableStep, tableStep);
+                    tableShortCourseB = round(convertLongCourseToShortCourse(eventIndex, tableLongCourseB), 0.1);
+                } while ((tableShortCourseB < inputTimeInSeconds) && (tableStep > 0))
+                if (tableStep > 0) {
+                    // Now interpolate between those two rows
+                    var interpolationFactor = (inputTimeInSeconds - tableShortCourseA) / (tableShortCourseB - tableShortCourseA);
+                    tableEmulationConversion = tableLongCourseA + (interpolationFactor * tableStep);
+                }
+            }
+            else {
+                pureConversion = convertLongCourseToShortCourse(eventIndex, inputTimeInSeconds);
+                originalCourse = 'long';
+
+                // Emulate a table-based conversion
+                // Find the two table rows that span our actual time
+                var tableStep = getAsaTableStep(eventIndex, inputTimeInSeconds);
+                if (tableStep > 0) {
+                    tableLongCourseA = roundDown(inputTimeInSeconds, tableStep);
+                    tableLongCourseB = tableLongCourseA + tableStep;
+                    tableShortCourseA = round(convertLongCourseToShortCourse(eventIndex, tableLongCourseA), 0.1);
+                    tableShortCourseB = round(convertLongCourseToShortCourse(eventIndex, tableLongCourseB), 0.1);
+
+                    // Now interpolate between those two rows
+                    var interpolationFactor = (inputTimeInSeconds - tableLongCourseA) / tableStep;
+                    tableEmulationConversion = tableShortCourseA + (interpolationFactor * (tableShortCourseB - tableShortCourseA));
+                }
+            }
+            // Convert the result from a time in seconds to a friendly formatted string
+            var html = '<h4>' + eventName(eventIndex) + '</h4><table><tbody>';
+            html += '<tr><td>Original ' + originalCourse + ' course time</td><td>' + raceTimeToString(inputTimeInSeconds) + '</td></tr>';
+            html += '<tr><td>Pure conversion</td><td>' + raceTimeToString(pureConversion) + '</td></tr>';
+            html += '<tr><td><strong>Rounded</strong></td><td><strong>' + raceTimeToString(round(pureConversion, 0.1), 1) + '</strong></td></tr>';
+            html += '<tr><td>Interpolated table conversion</td><td>';
+            if (tableEmulationConversion == 0) {
+                html += "Computer says no. (ASA tables don't go that far.)";
+            }
+            else {
+                html += raceTimeToString(tableEmulationConversion);
+            }
+            html += '</td></tr>';
+            html += '</tbody></table>';
+            if (false) // Turn this on to show the auto-generated ASA Table rows
+                if (tableEmulationConversion > 0) {
+                    html += '<p>Relevant rows from the ASA tables that were used for the interpolation:</p>';
+                    html += '<tbody><table><thead><tr><th>50m</th><th>25m</th></tr></thead><tbody>';
+                    html += '<tr><td>' + raceTimeToString(tableLongCourseA, 1) + '</td><td>' + raceTimeToString(tableShortCourseA, 1) + '</td></tr>'
+                    html += '<tr><td>' + raceTimeToString(tableLongCourseB, 1) + '</td><td>' + raceTimeToString(tableShortCourseB, 1) + '</td></tr>'
+                    html += '</tbody></table>';
+                }
+
+            resultElement.innerHTML = html;
+        }
+    }
+
+    // Compute and display a table that should correspond exactly to the ASA tables
+    function computeTable() {
+        var eventIndex = parseInt(eventSelectorElement.selectedIndex)
+        var tableLongCourse = getAsaTableStartLongCourseTime(eventIndex);
+        var html = '<tbody><table><thead><tr><th>50m</th><th>Pure</th><th>Rounded</th></tr></thead><tbody>';
+        var tableStep;
+        do {
+            var pure = convertLongCourseToShortCourse(eventIndex, tableLongCourse);
+            html += '<tr>';
+            html += '<td>' + raceTimeToString(tableLongCourse) + '</td>';
+            html += '<td>' + raceTimeToString(pure) + '</td>';
+            html += '<td>' + raceTimeToString(round(pure, 0.1), 1) + '</td>'
+            html += '</tr>';
+            tableStep = getAsaTableStep(eventIndex, tableLongCourse);
+            tableLongCourse = roundDown(tableLongCourse + tableStep, tableStep);
+        } while (tableStep != 0)
+        html += '</tbody></table>';
+        asaTableElement.innerHTML = html;
+    }
+
+    // Push options for the current conversion onto the window history
+    function updateURL() {
+        var path = window.location.pathname + '?';
+        if (inputTimeInSeconds != 0) {
+            path += 'time=' + raceTimeToString(inputTimeInSeconds) + '&';
+        }
+        path += 'event=' + eventSelectorElement.selectedIndex;
+        if (shortToLongModeElement.checked) {
+            path += '&mode=0';
+        }
+        else {
+            path += '&mode=1';
+        }
+        window.history.pushState('', '', path);
+    }
+
+    // Parse options in the URL and do the appropriate conversion
+    function parseURL() {
+        var options = {}
+        location.search.substr(1).split("&").forEach(function (item) { options[item.split("=")[0]] = item.split("=")[1] })
+
+        if (options.time !== undefined) {
+            inputTimeInSeconds = parseRaceTime(options.time);
+        }
+        if (options.event !== undefined) {
+            eventSelectorElement.selectedIndex = options.event;
+        }
+        if (options.mode !== undefined) {
+            longToShortModeElement = document.getElementById("long-to-short");
+            if (options.mode == "0") {
+                shortToLongModeElement.checked = true;
+                longToShortModeElement.checked = false;
+            }
+            else {
+                longToShortModeElement.checked = true;
+                shortToLongModeElement.checked = false;
+            }
+        }
+        calculateConversion();
+    }
+
+    function inputTimeChanged() {
+        inputTimeInSeconds = parseRaceTime(inputTimeElement.value);
+        calculateConversion();
+        updateURL();
+    }
+    function eventOrModeChanged() {
+        calculateConversion();
+        updateURL();
+        //computeTable();
+    }
+</script>
+<div id="main-wrapper">
+    <div id="main" class="container">
+        <div class="row">
+            <div class="9u skel-cell-mainContent">
+                <div class="content content-left">
+                    <!-- Content -->
+                    <article class="is-page-content">
+                        <header>
+                            <h2>@pageTitle</h2>
+                        </header>
+                        <section>
+                            <label>Enter Time:
+                                <input id="input-time" onchange="inputTimeChanged()" size="7"></input>
+                            </label></br>
+                            <label>Event:
+                                <select id="event-select" name="event" onchange="eventOrModeChanged()">
+                                </select>
+                            </label></br>
+                            <input type="radio" id="short-to-long" name="conversion-mode" onchange="eventOrModeChanged()" checked>Short to Long</input></br>
+                            <input type="radio" id="long-to-short" name="conversion-mode" onchange="eventOrModeChanged()">Long to Short</input></br>
+                            <div id="result"></div>
+                            <div id="asa-table"></div>
+                            @CurrentPage.BodyText
+                        </section>                           
+                    </article>
+                    <!-- /Content -->
+                </div>
+            </div>
+            <div class="3u not-mobile">
+                <div class="sidebar">
+                    <!-- Sidebar -->
+                    @{ Html.RenderPartial("winAllLatestNewsWidget"); }
+                    <!-- /Sidebar -->
+                </div>
+            </div>
+        </div>
+        @{ Html.RenderPartial("umbChildFeatures"); }
+    </div>
+</div>
+<script>
+    // This bit of script placed at the end so the page should be loaded
+
+    // Find our elements
+    eventSelectorElement = document.getElementById("event-select");
+    inputTimeElement = document.getElementById("input-time");
+    shortToLongModeElement = document.getElementById("short-to-long");
+    resultElement = document.getElementById("result");
+    asaTableElement = document.getElementById("asa-table");
+     
+    // Populate the event select drop-down
+    for( var i = 0; i < NUM_EVENTS; i++ )
+    {
+        var option = document.createElement("option");
+        option.text = eventName(i);
+        eventSelectorElement.add(option,eventSelectorElement[i]);
+    }
+
+    parseURL()
+    //computeTable()
+
+    // When the user navigates the history, re-parse the URL
+    addListener( "onPopState", parseURL );
+</script>
+<!-- /Main -->

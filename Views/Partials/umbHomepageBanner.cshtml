@@ -1,0 +1,26 @@
+﻿@inherits UmbracoTemplatePage
+
+@if (CurrentPage.showBanner == true)
+{
+    string link = CurrentPage.bannerExternalLink.ToString();
+    if(link.IsEmpty())
+    {
+        link = CurrentPage.bannerLink.ToString();
+        link = Umbraco.Content(link).Url;
+    }
+
+    <!-- Banner -->
+    <div id="banner-wrapper">
+        <section id="banner">
+            <h2>@Umbraco.Field("bannerHeader")</h2>
+            <span class="byline">@Umbraco.Field("bannerSubheader")</span>
+            
+		    <!-- Only show the banner link if the link isn't empty -->
+			@if(link != "")
+			{
+            	<a href="@link" class="button">@Umbraco.Field("bannerLinkText")</a>
+            }
+        </section>
+    </div>
+    <!-- /Banner -->
+}

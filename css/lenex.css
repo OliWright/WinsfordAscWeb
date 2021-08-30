@@ -1,0 +1,138 @@
+﻿.lenex {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  color: #666;
+  text-size-adjust: 100%;
+  font-size: 12px; }
+  .lenex h2, .lenex h5 {
+    color: #33b; }
+  .lenex h1, .lenex h3, .lenex h4 {
+    color: #55e; }
+  .lenex h1, .lenex h2, .lenex h3, .lenex h4, .lenex h5 {
+    font-size: 1em;
+    margin-top: 0.1em;
+    margin-bottom: 0.1em;
+    font-weight: bold;
+    line-height: 1.5em; }
+  .lenex h1 {
+    font-size: 2em;
+    font-style: italic;
+    text-align: center; }
+  .lenex h2 {
+    line-height: 2em;
+    font-style: italic;
+    font-size: 1.75em; }
+  .lenex h3 {
+    font-size: 1.5em; }
+  .lenex h4 {
+    font-size: 1.25em; }
+  .lenex p {
+    margin-top: 0;
+    margin-bottom: 0.1em; }
+  .lenex .hidden {
+    display: none; }
+  .lenex .flex-container {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    justify-content: center; }
+  .lenex .pane {
+    padding: 0.2em;
+    margin: 0.5em; }
+    @media screen {
+      .lenex .pane {
+        background-color: rgba(170, 170, 170, 0.4);
+        border: 2px solid black;
+        border-radius: 4px; } }
+  .lenex .flex-container.separate-sessions {
+    flex-flow: row wrap;
+    align-items: initial;
+    justify-content: initial;
+    padding-left: 0.25em;
+    padding-right: 0.25em; }
+    .lenex .flex-container.separate-sessions .pane {
+      margin-top: 0;
+      margin-bottom: 0.5em;
+      margin-left: 0.25em;
+      margin-right: 0.25em; }
+  .lenex .separate-sessions .pane {
+    flex: 1 1 auto;
+    width: 30em; }
+  .lenex table.event-title {
+    border: 0 none black;
+    border-spacing: 0; }
+    .lenex table.event-title tr {
+      border: 0 none black; }
+    .lenex table.event-title td:nth-child(1) {
+      width: 8em;
+      vertical-align: top; }
+  .lenex .startlists table, .lenex .results table, .lenex .results-by-heat table {
+    border-spacing: 0; }
+  .lenex .startlists .place, .lenex .results .place, .lenex .results-by-heat .place {
+    font-weight: bold; }
+  .lenex .startlists td, .lenex .startlists th, .lenex .results td, .lenex .results th, .lenex .results-by-heat td, .lenex .results-by-heat th {
+    text-align: left;
+    padding-left: 0.4em;
+    padding-right: 0.4em; }
+  .lenex .splits {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    justify-content: flex-start; }
+    .lenex .splits p {
+      width: 8em; }
+  .lenex .splits-off .splits-row {
+    display: none; }
+  .lenex .splits-off .splits-row.show {
+    display: table-row; }
+    .lenex .splits-off .splits-row.show .time {
+      display: flex; }
+    .lenex .splits-off .splits-row.show .interval {
+      display: none; }
+  .lenex .splits-off .splits-row.show.interval {
+    display: table-row; }
+    .lenex .splits-off .splits-row.show.interval .time {
+      display: none; }
+    .lenex .splits-off .splits-row.show.interval .interval {
+      display: flex; }
+  .lenex .splits-interval .splits.time {
+    display: none; }
+  .lenex .splits-time .splits.interval {
+    display: none; }
+  .lenex .show-auto .results, .lenex .show-auto .results-by-heat {
+    display: none; }
+  .lenex .show-auto .has-results .results {
+    display: block; }
+  .lenex .show-auto .has-results .startlists {
+    display: none; }
+  .lenex .show-startlists .results, .lenex .show-startlists .results-by-heat {
+    display: none; }
+  .lenex .show-results .startlists, .lenex .show-results .results-by-heat {
+    display: none; }
+  .lenex .show-results-by-heat .startlists, .lenex .show-results-by-heat .results {
+    display: none; }
+  .lenex #background-image {
+    position: fixed;
+    z-index: -1;
+    filter: opacity(20%); }
+  @media print {
+    .lenex #controls {
+      display: none; }
+    .lenex #index {
+      column-count: 2; } }
+  @media screen {
+    .lenex .expand-selected .closed {
+      display: none; } }
+
+.lenex.separate-results .only-inline-results {
+  display: none; }
+
+.lenex.separate-results .pane {
+  flex: 1 1 auto; }
+
+.lenex.separate-results #index .results {
+  display: none; }
+
+.lenex.inline-results .only-separate-results {
+  display: none; }
+

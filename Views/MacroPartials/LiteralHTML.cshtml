@@ -1,0 +1,13 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+@using ClientDependency.Core.Mvc
+
+@{
+    Layout = null;
+
+    string htmlString = Model.MacroParameters["html"].ToString();
+}
+
+@{
+	@Html.Raw(htmlString)
+}

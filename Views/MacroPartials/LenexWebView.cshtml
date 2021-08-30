@@ -1,0 +1,31 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+
+@using ClientDependency.Core.Mvc
+
+@{
+    Layout = null;
+
+    string lenexFolder = Model.MacroParameters["lenexFolder"].ToString();
+    Html.RequiresCss("/css/lenex.css");
+    Html.RequiresJs("/js/lenex-parse.js");
+    Html.RequiresJs("/js/lenex-render.js");
+}
+
+@{
+    <div id="lenex-container"></div>
+    <script type="text/javascript">
+        var customisation = {
+            colours: {
+                headingsDark: "#f60",
+                headingsLight: "#999",
+                text: "#666"
+            },
+            options: {
+                showWatermark: false,
+                showTitle: false,
+                showControls: false
+            }
+        };
+        LenexRender("@lenexFolder", "lenex-container", customisation);
+    </script>
+}

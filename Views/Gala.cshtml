@@ -1,0 +1,91 @@
+﻿@inherits UmbracoTemplatePage
+@{
+    Layout = "umbLayout.cshtml";
+	// Why does this keep reverting?
+
+    // If the editor has not explicitly provided the "Page title" property page 
+    // then just show the name of the page otherwise show the provided title
+    var pageTitle = string.IsNullOrWhiteSpace(CurrentPage.Title)
+        ? CurrentPage.Name
+        : CurrentPage.Title;
+		
+	bool applicationsOpen = CurrentPage.acceptingEntries;
+	DateTime applicationClosingDate = CurrentPage.applicationClosingDate;
+	int numDaysRemaining = (int) (applicationClosingDate - DateTime.Today).TotalDays;
+}
+<div id="main-wrapper">
+    <div id="main" class="container">
+        <div class="row">
+            <div class="9u skel-cell-mainContent">
+                <div class="content content-left">
+                    <!-- Content -->
+                    <article class="is-page-content">
+                        <header>
+                            <h2>@pageTitle</h2>
+                        </header>
+                        <section>
+							@{
+								if (CurrentPage.HasValue("Image"))
+								{
+									Image image = Umbraco.TypedMedia(CurrentPage.Image.Id);
+                                    if( image.GetPropertyValue<bool>( "preventCropping" ) )
+                                    {
+    									<span class="image image-full"><noscript data-slimmage><img src="@image.GetCropUrl(400)" alt=""/></noscript></span>
+                                    }
+                                    else
+                                    {
+    									<span class="image image-full"><noscript data-slimmage><img src="@image.GetCropUrl(400,225)" alt=""/></noscript></span>
+                                    }
+								}
+								
+								if( applicationsOpen )
+								{
+									if( numDaysRemaining > 7 )
+									{
+										<h3>The Club is now accepting entries for this meet.</h3>
+										<p>Closing Date for Entries: @applicationClosingDate.ToString("d")</p>
+									}
+									else if( numDaysRemaining > 1 )
+									{
+										<h3>Only @numDaysRemaining days left to submit your entry.</h3>
+										<p>Closing Date for Entries: @applicationClosingDate.ToString("d")</p>
+									}
+									else if( numDaysRemaining == 1 )
+									{
+										<h3>Only one day left to submit your entry.</h3>
+										<p>Closing Date for Entries: @applicationClosingDate.ToString("d")</p>
+									}
+									else if( numDaysRemaining == 0 )
+									{
+										<h3>This is the final day to submit your entry.</h3>
+										<p>Closing Date for Entries: @applicationClosingDate.ToString("d")</p>
+									}
+									else
+									{
+										<h3>The Club is no longer accepting entries for this meet.</h3>
+										<p>Closing Date for Entries: @applicationClosingDate.ToString("d")</p>
+									}
+								}
+								else
+								{
+									<h3>The club is not yet accepting entries for this meet.</h3>
+								}
+							}                        
+                            @CurrentPage.BodyText
+                        </section>                           
+                    </article>
+                    <!-- /Content -->
+                </div>
+            </div>
+            <div class="3u not-mobile">
+                <div class="sidebar">
+                    <!-- Sidebar -->
+                    @{ Html.RenderPartial("winAllLatestNewsWidget"); }
+                    <!-- /Sidebar -->
+                </div>
+            </div>
+        </div>
+        @{ Html.RenderPartial("umbChildFeatures"); }
+    </div>
+</div>
+<!-- /Main -->

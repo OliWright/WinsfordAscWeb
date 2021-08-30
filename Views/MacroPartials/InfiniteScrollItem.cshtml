@@ -1,0 +1,79 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@{
+    Layout = null;
+
+    int itemId;
+    if (!int.TryParse(Model.MacroParameters["itemId"].ToString(), out itemId))
+    {
+        itemId = -1;
+    }
+
+    IPublishedContent item = Umbraco.TypedContent(itemId);
+    Image image = null;
+    if (item.HasValue("image"))
+    {
+        image = item.GetPropertyValue<Image>("image");
+    }
+}
+@{
+    // If the editor has not explicitly provided the "Page title" property page 
+    // then just show the name of the page otherwise show the provided title
+    string title = item.GetPropertyValue<string>("title");
+    if( string.IsNullOrWhiteSpace(title) )
+    {
+        title = item.Name;
+    }
+
+    // If the editor has not explicitly set the publishDate property then show the create date
+    DateTime dateTime = item.GetPropertyValue<DateTime>("publishDate");
+    if( dateTime.Year == 1 )
+    {
+        dateTime = item.CreateDate;
+    }
+
+    string url = "";
+    string buttonText = "Continue Reading";
+    if( item.HasProperty("page") )
+    {
+        int page = item.GetPropertyValue<int>("page");
+        if( page == 0 )
+        {
+            url = "/";
+        }
+        else
+        {
+            url = Umbraco.TypedContent(page).Url;
+        }
+        buttonText = "Go to Page";
+    }
+    else
+    {
+        url = item.Url;
+    }
+    string subHeader = item.GetPropertyValue<string>("subHeader");
+    string bodyText = item.GetPropertyValue<string>("bodyText");
+
+    <section>
+        <h3><a href="@url">@title</a></h3>
+        @if (!string.IsNullOrWhiteSpace(subHeader))
+        {
+            <span class="byline">@subHeader</span>
+        }
+        <ul class="meta">
+            <li class="timestamp">@dateTime.ToString("f")</li>
+        </ul>
+
+        @if (Umbraco.MemberHasAccess(item.Id, item.Path))
+        {
+            if (image != null)
+            {
+                //<a href="@url" class="image image-full"><noscript data-slimmage><img src="@image.GetCropUrl(270, 100)" alt="News Picture" /></noscript></a>
+                <a href="@url" class="image image-full"><img src="@image.Url" alt="News Picture" /></a>
+                //<a href="@url" class="image image-full"><img src="@image.GetCropUrl( 270, 161@*, ratioMode: ImageCropRatioMode.Height*@ )" alt="News Picture" /></a>
+            }
+            @Umbraco.Truncate(bodyText, 200)
+        }
+
+        <a href="@url" class="button">@buttonText</a>
+    </section>
+}

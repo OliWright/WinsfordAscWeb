@@ -1,0 +1,42 @@
+﻿<!--
+    Very loosely based on....
+    TXT 2.0 by HTML5 UP
+    html5up.net | twitter.com/n33co
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+@inherits UmbracoTemplatePage
+@{
+    Layout = null;
+
+    // Just pretend all pages have galleries now.
+    // We include photoswipe.min.js and photoswipe-ui-default.min.js
+    // using Html.RequiresJs on pages that really have a gallery.
+    // But for some reason gallery.js doesn't work with that mechanism.
+    // So we're going to always include it whether or not it's required.
+    // Same goes for the photoswipe css files.
+    bool hasGallery = true;//CurrentPage.HasValue("Gallery");
+}
+<!DOCTYPE html>
+<html>
+<head>
+    @{ Html.RenderPartial("standardHead"); }
+    @if( hasGallery )
+    {
+        <!-- PhotoSwipe files -->
+        <link rel="stylesheet" href="/css/photoswipe.css"> 
+        <link rel="stylesheet" href="/css/default-skin/default-skin.css"> 
+        <script src="/js/photoswipe.min.js"></script> 
+        <script src="/js/photoswipe-ui-default.min.js"></script>
+        <script src="/js/gallery.js"></script>
+    }
+</head>
+<body class="homepage" id="root">
+    @{ Html.RenderPartial("header"); }
+    @if( hasGallery )
+    {
+        Html.RenderPartial("photoSwipe");
+    }
+    @RenderBody()
+    @{ Html.RenderPartial("footer"); }
+</body>
+</html>

@@ -1,0 +1,58 @@
+﻿@using Umbraco.Web.Models
+@inherits UmbracoTemplatePage
+@{
+    // Model.Content is the current page that we're on
+    // AncestorsOrSelf is all of the ancestors this page has in the tree
+    // (1) means: go up to level 1 and stop looking for more ancestors when you get there
+    // First() gets the first ancestor found (the home page, on level 1)
+    var homePage = CurrentPage.AncestorsOrSelf(1).First();
+}
+<!-- Features -->
+<section class="is-features">
+    <h2 class="major"><span>Featured Pages</span></h2>
+    <div>
+        <div class="row">
+            @foreach (var feature in homePage.Descendants("umbTextPage").Where("featuredPage"))
+            {
+                bool hasAccess = Umbraco.MemberHasAccess( feature.Id, feature.Path );
+                bool hasSynopsis = !String.IsNullOrEmpty(feature.Synopsis);
+				if( hasAccess || hasSynopsis )
+				{
+                    bool hasFeatureImage = feature.HasValue("featureImage");
+                    bool hasImage = feature.HasValue("image");
+					<div class="3u">
+						<!-- Feature -->
+						<section class="is-feature">
+							<h3><a href="@feature.Url">@feature.Name</a></h3>
+							@if (hasFeatureImage || hasImage)
+                            {
+                                var featureImage = hasFeatureImage ? feature.featureImage : feature.image;
+                                Image image = Umbraco.TypedMedia(featureImage.Id);
+                                if (image != null)
+                                {
+                                    <a href="@feature.Url" class="image image-full">
+                                        <noscript data-slimmage>
+                                            <img src="@image.GetCropUrl( 270, 161 )" alt="Page Image" />
+                                        </noscript>
+                                    </a>
+                                }
+                            }
+                            <div>
+                                @if( hasSynopsis )
+                                {
+                                    <p>@feature.Synopsis</p>
+                                }
+                                else
+                                {
+							        @Umbraco.Truncate(feature.BodyText, 100)
+                                }
+                            </div>
+						</section>
+						<!-- /Feature -->
+					</div>
+				}
+            }
+        </div>
+    </div>
+</section>
+<!-- /Features -->

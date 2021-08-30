@@ -1,0 +1,135 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@using System.Xml;
+@using Winsford;
+
+@functions{
+    void cellRefToRowColumn(string cellRef, out int row, out int column)
+    {
+        int rowCharIndex = cellRef.IndexOfAny("0123456789".ToCharArray());
+        row = Int32.Parse(cellRef.Substring(rowCharIndex));
+        column = 0;
+        int mul = 1;
+        for (int i = 0; i < rowCharIndex; ++i)
+        {
+            int c = cellRef[rowCharIndex - i - 1] - 'A' + 1;
+            column += (c * mul);
+            mul *= 26;
+        }
+    }
+}
+
+@{
+    string spreadSheetId = Model.MacroParameters["spreadSheetId"].ToString();
+	
+    string sheetId = Model.MacroParameters["sheetId"].ToString();
+    //if(sheetId == "")
+    //{
+        // Special id for the 'default' sheet
+    //    sheetId = "od6";
+    //}
+	
+    string cellRange = Model.MacroParameters["cellRange"].ToString();
+	if(sheetId != "")
+	{
+		cellRange = sheetId + "!" + cellRange;
+	}
+
+    IList<IList<Object>> values = GoogleSheet.Read(spreadSheetId, cellRange);
+
+    string headerRowString = Model.MacroParameters["headerRow"].ToString();
+    bool headerRow = false;
+    if (!bool.TryParse(headerRowString, out headerRow))
+    {
+        // Failed to parse.  But TryParse fails with "0" and "1", which Umbraco uses for tickboxes.
+        headerRow = (headerRowString == "1");
+    }
+    string headerColumnString = Model.MacroParameters["headerColumn"].ToString();
+    bool headerColumm = false;
+    if (!bool.TryParse(headerColumnString, out headerColumm))
+    {
+        // Failed to parse.  But TryParse fails with "0" and "1", which Umbraco uses for tickboxes.
+        headerColumm = (headerColumnString == "1");
+    }
+
+	bool thisRowIsHeader = headerRow;
+
+    // Establish the actual range of the cells
+    int numColumns = 0;
+    foreach (IList<Object> row in values)
+    {
+		if(row.Count > numColumns)
+		{
+			numColumns = row.Count;
+		}
+    }
+}
+
+<table>
+    @{
+		foreach (IList<Object> row in values)
+        {
+			// Open the row
+			if (thisRowIsHeader)
+			{
+				@Html.Raw("<thead><tr>");
+			}
+			else
+			{
+				@Html.Raw("<tr>");
+			}
+			int column = 0;
+			foreach(Object cell in row)
+			{
+				string text = cell.ToString();
+				if (thisRowIsHeader)
+				{
+					@Html.Raw("<th>" + @text + "</th>");
+				}
+				else
+				{
+					if ((column == 0) && headerColumm)
+					{
+						@Html.Raw("<td><em>" + @text + "</em></td>");
+					}
+					else
+					{
+						@Html.Raw("<td>" + @text + "</td>");
+					}
+				}
+				++column;
+			}
+			// Pad out the cells to the end of the row
+			for (; column < numColumns; ++column)
+			{
+				if (thisRowIsHeader)
+				{
+					@Html.Raw("<th></th>");
+				}
+				else
+				{
+					@Html.Raw("<td></td>");
+				}
+			}
+			// Close the row
+			if (thisRowIsHeader)
+			{
+				@Html.Raw("</tr></thead><tbody>");
+				thisRowIsHeader = false;
+			}
+			else
+			{
+				@Html.Raw("</tr>");
+			}
+        }
+		// Close the table
+		if (thisRowIsHeader)
+		{
+			@Html.Raw("</thead>");
+			thisRowIsHeader = false;
+		}
+		else
+		{
+			@Html.Raw("</tbody>");
+		}
+    }
+</table>

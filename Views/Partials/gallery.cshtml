@@ -1,0 +1,98 @@
+﻿@inherits UmbracoTemplatePage
+@{
+    bool hasGallery = false;
+    IEnumerable<IPublishedContent> imagesCollection = null;
+    int numPicturesPerRow = 4;
+    if( CurrentPage.HasValue("Gallery") )
+    {
+        var imagesList = Model.Content.GetPropertyValue<string>("Gallery").Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse);
+        imagesCollection = Umbraco.TypedMedia(imagesList).Where(x => x != null);
+        hasGallery = true;
+
+        int numPictures = imagesList.Count();
+        if( numPictures > 6 )
+        {
+            numPicturesPerRow = 4;
+        }
+        else if( numPictures > 2 )
+        {
+            numPicturesPerRow = 3;
+        }
+        else if( numPictures > 0 )
+        {
+            numPicturesPerRow = numPictures;
+        }
+        else
+        {
+            numPicturesPerRow = 1;
+        }
+    }
+    int galleryPictureMarginPercent = 1;
+    int galleryPictureWidthPercent = ((int) (100 / (float) numPicturesPerRow)) - (galleryPictureMarginPercent*2);
+
+    Image mainImage = null;
+	if( CurrentPage.HasValue("Image") )
+	{
+		mainImage = Umbraco.TypedMedia(CurrentPage.Image.Id);
+	}
+}
+
+@if( hasGallery )
+{
+    <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+    @{
+        if( mainImage != null )
+        {
+            var width = mainImage.GetPropertyValue<int>("umbracoWidth");
+            var height = mainImage.GetPropertyValue<int>("umbracoHeight");
+            string dimensionsStr = width + "x" + height;
+            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="main-image">
+                <a href="@mainImage.Url" itemprop="contentUrl" data-size="@dimensionsStr">
+                    @if( mainImage.GetPropertyValue<bool>( "preventCropping" ) )
+                    {
+                        <span class="image image-full"><noscript data-slimmage><img src="@mainImage.GetCropUrl(400)" alt="Main Image"/></noscript></span>
+                    }
+                    else
+                    {
+                        <span class="image image-full"><noscript data-slimmage><img src="@mainImage.GetCropUrl(400,225)" alt="Main Image"/></noscript></span>
+                    }
+                </a>
+                <!--<figcaption itemprop="caption description">Caption text</figcaption> -->
+            </figure>
+        }
+
+        int numPicturesInRow = 0;
+        string sizeStyle = "width: " + galleryPictureWidthPercent + "%; margin: 5px " + galleryPictureMarginPercent + "% 5px " + galleryPictureMarginPercent + "%;";
+        foreach (IPublishedContent imageItem in imagesCollection)
+        {      
+            var width = imageItem.GetPropertyValue<int>("umbracoWidth");
+            var height = imageItem.GetPropertyValue<int>("umbracoHeight");
+            string dimensionsStr = width + "x" + height;
+            string thumbnailUrl = (imageItem.Url).Replace(".jpg", "_big-thumb.jpg");
+            string floatStyle = (numPicturesInRow == 0) ? "clear: left;" : "float: left;"; // Don't float the first picture on a row
+            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="gallery-image" style="@sizeStyle @floatStyle">
+                <a href="@imageItem.Url" itemprop="contentUrl" data-size="@dimensionsStr">
+                    <img src="@thumbnailUrl" itemprop="thumbnail" alt="Gallery Image" class="thumbnail"/>
+                    <!--<span class="image image-full"><noscript data-slimmage><img src="@imageItem.GetCropUrl(400,225)" itemprop="thumbnail" alt="Gallery Image"/></noscript></span>-->
+                </a>
+                <!--<figcaption itemprop="caption description">Caption text</figcaption> -->
+            </figure>
+            if( ++numPicturesInRow == numPicturesPerRow )
+            {
+                numPicturesInRow = 0;
+            }
+        }                                                               
+    }
+    </div>
+}
+else if( mainImage != null )
+{
+    if( mainImage.GetPropertyValue<bool>( "preventCropping" ) )
+    {
+        <span class="image image-full"><noscript data-slimmage><img src="@mainImage.GetCropUrl(400)" alt="Main Image"/></noscript></span>
+    }
+    else
+    {
+        <span class="image image-full"><noscript data-slimmage><img src="@mainImage.GetCropUrl(400,225)" alt="Main Image"/></noscript></span>
+    }
+}

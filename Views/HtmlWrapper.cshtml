@@ -1,0 +1,135 @@
+﻿@inherits UmbracoTemplatePage
+@{
+    Layout = "umbLayout.cshtml";
+	// Why does this keep reverting?
+
+    // If the editor has not explicitly provided the "Page title" property page 
+    // then just show the name of the page otherwise show the provided title
+    var pageTitle = string.IsNullOrWhiteSpace(CurrentPage.Title)
+        ? CurrentPage.Name
+        : CurrentPage.Title;
+
+	string rootFolder = CurrentPage.rootFolder;
+    string defaultPage = CurrentPage.defaultPage;
+}
+<div id="main-wrapper">
+    <div id="main" class="container">
+        <div class="row">
+            <!-- Content -->
+            <article class="is-page-content">
+                <header>
+                    <h2>@pageTitle</h2>
+                </header>
+                <section>
+                    @CurrentPage.BodyText
+                </section>                           
+                <section id="ss-container">
+                </section>
+            </article>
+            <!-- /Content -->
+        </div>
+    </div>
+</div>
+<script>
+    var ssContainer;
+    var rootFolder = "@rootFolder";
+    var scrollTop = 0;
+    var popScrollTop = 0; // Where to scroll to on window state pop
+
+    function linkClicked(e) {
+        var href;
+        var target = e.target || e.srcElement;
+
+        //tell the browser not to respond to the link click
+        e.preventDefault();
+
+        href = target.getAttribute('href');
+    
+        scrollTop = 0;
+        popScrollTop = (window.pageYOffset || document.documentElement.scrollTop);
+
+        // Push the link onto the window history
+        var url = '?page=' + href;
+        url += '&popScroll=' + popScrollTop;
+        window.history.pushState('', '', url);
+
+        loadHtml(href);
+    }
+
+
+    // Asynchronously load some html
+    function loadHtml(page) {
+        // Remove the existing content and replace it with a loading message
+        var html = '<p>Loading ';
+        html += rootFolder + '/';
+        html += page;
+        html += '</p>';
+        var height = ssContainerElement.clientHeight;
+        if(height != 0) { ssContainerElement.style.height = String(height) + "px"; }
+        ssContainerElement.innerHTML = html;
+
+        var request = new XMLHttpRequest();
+        request.onload = function (e) {
+            html = this.responseText;
+            ssContainerElement.innerHTML = this.responseText;
+            ssContainerElement.style.height = "auto";
+            document.documentElement.scrollTop = document.body.scrollTop = scrollTop;
+
+            // Add an onclick event to each link
+            var forEach = Array.prototype.forEach;
+            var links = ssContainerElement.getElementsByTagName('a');
+            forEach.call(links, function (link) {
+                link.onclick = linkClicked;
+            });
+        };
+        request.onerror = function (e) {
+            console.error(this.statusText);
+            html = '<p>Error loading sportsys page</p><p>';
+            html += this.statusText;
+            html += '</p>';
+            ssContainerElement.innerHTML = html;
+        };
+        request.open("GET", rootFolder + '/' + page, true);
+        request.send();
+    }
+
+    function showPage(page) {
+        // Push the link onto the window history
+        var url = '?page=' + page;
+        window.history.pushState('', '', url);
+
+        loadHtml(page);
+    }
+
+    function parseUrl() {
+        var options = {}
+        location.search.substr(1).split("&").forEach(function (item) { options[item.split("=")[0]] = item.split("=")[1] })
+
+        popScrollTop = 0;
+        scrollTop = 0;
+        if(options.popScroll !== undefined) {
+            popScrollTop = parseInt(options.popScroll);
+        }
+
+        if (options.page !== undefined) {
+            loadHtml(options.page);
+        }
+        else {
+            loadHtml("@defaultPage");
+        }
+    }
+
+    window.onpopstate = function () {
+        var newScrollTop = popScrollTop;
+        parseUrl();
+        scrollTop = newScrollTop;
+    }
+
+    skel.on('ready', function () {
+        ssContainerElement = document.getElementById("ss-container");
+        parseUrl();
+    }
+    );
+
+</script>
+<!-- /Main -->

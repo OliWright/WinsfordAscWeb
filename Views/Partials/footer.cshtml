@@ -1,0 +1,54 @@
+@inherits UmbracoTemplatePage
+@using ClientDependency.Core.Mvc;
+
+    <!-- Footer -->
+    <footer id="footer">
+		@* Taken out the social links for now
+			<div class="row">
+				<div class="12u">
+					{ Html.RenderPartial("umbSocial"); }
+				</div>
+			</div>
+		*@
+            <!-- Copyright -->
+            <div id="copyright">
+                &copy; @DateTime.Now.Year @Umbraco.Field("copyright", recursive: true)<br/>Design based on <a href="http://html5up.net/txt/">TXT</a> by <a href="http://n33.co/">n33</a> for <a href="http://html5up.net/">HTML5 UP</a>
+            </div>
+            <!-- /Copyright -->
+    </footer>
+
+    <script type="text/javascript">
+        // Set-up the background image
+        var backgroundImagePosX = -1000;
+        var backgroundImagePosY = -1000;
+        var imageElement = document.getElementById("background-image");
+        function positionBackgroundImage() {
+            var windowWidth = window.innerWidth;
+            windowWidth = windowWidth == undefined ? document.documentElement.clientWidth : windowWidth;
+            var windowHeight = window.innerHeight;
+            windowHeight = windowHeight == undefined ? document.documentElement.clientHeight : windowHeight;
+            var width;
+            var height;
+            if (windowWidth < windowHeight) {
+                width = height = windowWidth;
+            }
+            else {
+                width = height = windowHeight;
+            }
+            var posX = (windowHeight - height) / 2;
+            var posY = (windowWidth - width) / 2;
+            if ((Math.abs(posX - backgroundImagePosX) > 30) || (Math.abs(posY - backgroundImagePosY) > 30)) {
+                backgroundImagePosX = posX;
+                backgroundImagePosY = posY;
+                imageElement.style.top = posX.toString() + "px";
+                imageElement.style.left = posY.toString() + "px";
+                imageElement.style.width = width.toString() + "px";
+                imageElement.style.height = height.toString() + "px";
+            }
+        }
+        positionBackgroundImage();
+        $(imageElement).show();
+        $(window).resize(function () { positionBackgroundImage(); })
+    </script>
+
+    <!-- /Footer -->

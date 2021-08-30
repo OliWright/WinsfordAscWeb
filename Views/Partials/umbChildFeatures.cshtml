@@ -1,0 +1,56 @@
+﻿@inherits UmbracoTemplatePage
+@{
+	var childPages = CurrentPage.Children().Where("featureInParent");
+}
+<!-- Features -->
+@if( childPages.Any() )
+{
+    <div class="row"><div class="12u"><section class="is-features">
+        <h2 class="major"><span>Features</span></h2>
+        <div>
+            <div class="row">
+			    @foreach (var feature in childPages)
+			    {
+                    bool hasAccess = Umbraco.MemberHasAccess( feature.Id, feature.Path );
+                    bool hasSynopsis = !String.IsNullOrEmpty(feature.Synopsis);
+				    if( hasAccess || hasSynopsis )
+				    {
+                        bool hasFeatureImage = feature.HasValue("featureImage");
+                        bool hasImage = feature.HasValue("image");
+					    <div class="3u">
+						    <!-- Feature -->
+                            <section class="is-feature">
+                                <h3><a href="@feature.Url">@feature.Name</a></h3>
+                                @if (hasFeatureImage || hasImage)
+                                {
+                                    var featureImage = hasFeatureImage ? feature.featureImage : feature.image;
+                                    Image image = Umbraco.TypedMedia(featureImage.Id);
+                                    if (image != null)
+                                    {
+                                        <a href="@feature.Url" class="image image-full">
+                                            <noscript data-slimmage>
+                                                <img src="@image.GetCropUrl( 270, 161 )" />
+                                            </noscript>
+                                        </a>
+                                    }
+                                }
+                                <div>
+                                    @if (hasSynopsis)
+                                    {
+                                        <p>@feature.Synopsis</p>
+                                    }
+                                    else
+                                    {
+                                        @Umbraco.Truncate(feature.BodyText, 100)
+                                    }
+                                </div>
+                            </section>
+						    <!-- /Feature -->
+					    </div>
+                    }
+			    }
+            </div>
+        </div>
+    </section></div></div>
+}
+<!-- /Features -->

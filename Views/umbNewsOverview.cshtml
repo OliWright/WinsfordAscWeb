@@ -1,0 +1,137 @@
+﻿@inherits UmbracoTemplatePage
+@using Umbraco.Web.Models;
+@{
+    Layout = "umbLayout.cshtml";
+
+    int numItemsPerPage = 10;
+    int pageIdx; // Zero-based index of page we are viewing
+
+    if (!int.TryParse(Request.QueryString["page"],out pageIdx))
+    {
+        pageIdx = 1;
+    }
+    --pageIdx; // We're zero based
+
+	// If the editor has not explicitly provided the "Page title" property page 
+    // then just show the name of the page otherwise show the provided title
+    var pageTitle = string.IsNullOrWhiteSpace(CurrentPage.Title)
+        ? CurrentPage.Name
+        : CurrentPage.Title;
+
+	// The current page is the news overview page
+    var newsOverview = CurrentPage;
+
+    // Similar to above: find all pages with document type umbNewsItem under the news overview page
+    // Then order them, first by publishDate (a property the editor can explicitly set on the news item)
+    // and then by createDate, which is set by Umbraco automatically when a page gets created.
+    DynamicPublishedContentList newsItems = newsOverview.umbNewsItems;
+   	DynamicPublishedContentList updateNotifications = CurrentPage.AncestorsOrSelf(1).First().Children( "updateNotificationCollection" ).First().Children( "updateNotification" );
+    IQueryable<IPublishedContent> allNewsItems = newsItems.Concat( updateNotifications ).OrderBy("publishDate desc, createDate desc");
+
+    int numNewsItems = allNewsItems.Count();
+    int numPages = (numNewsItems + numItemsPerPage - 1) / numItemsPerPage;
+    if( pageIdx >= numPages )
+    {
+        pageIdx = numPages - 1;
+    }
+    else if( pageIdx < 0 )
+    {
+        pageIdx = 0;
+    }
+    var allPageNewsItems = allNewsItems.Skip(pageIdx * numItemsPerPage).Take(numItemsPerPage);
+	dynamic pageNewsItems = new DynamicPublishedContentList();
+	foreach( var item in allPageNewsItems )
+	{
+		if( Umbraco.MemberHasAccess( item.Id, item.Path ) )
+		{
+			pageNewsItems.Add( item );
+		}
+	}
+
+    var pagesMacroParameters = new { currentPage = pageIdx + 1, totalNumPages = numPages };
+}
+<!-- Main -->
+<div id="main-wrapper">
+    <div id="main" class="container">
+        <div class="row">
+            <div class="12u skel-cell-mainContent">
+                <div class="content">
+                    <!-- Content -->
+                    <article class="is-page-content">
+                        <header>
+                            <h2>@pageTitle</h2>
+                        </header>
+                        @Umbraco.RenderMacro("Pages", pagesMacroParameters )
+
+                        @foreach (var item in pageNewsItems)
+                        {
+                            // If the editor has not explicitly provided the "Page title" property page 
+                            // then just show the name of the page otherwise show the provided title
+                            var title = string.IsNullOrWhiteSpace(item.Title) 
+                                ? item.Name 
+                                : item.Title;
+
+
+                            // If the editor has not explicitly set the publishDate property then show the create date
+                            var dateTime = item.PublishDate == default(DateTime) 
+                                ? item.CreateDate 
+                                : item.PublishDate;
+                            
+		                    string url = "";
+                            string buttonText = "Continue Reading";
+                            if( item.HasProperty("page") )
+                            {
+                                url = item.page.ToString();
+                                if( item.page == 0 )
+                                {
+                                    url = "/";
+                                }
+                                else
+                                {
+                                    url = Umbraco.TypedContent(item.page).Url;
+                                }
+                                buttonText = "Go to Page";
+                            }
+                            else
+                            {
+                                url = item.Url;
+                            }
+
+                            <section>
+                                <h3><a href="@url">@title</a></h3>
+                                @if( !string.IsNullOrWhiteSpace(item.SubHeader) )
+                                {
+    				                <span class="byline">@item.SubHeader</span>
+                                }
+                                <ul class="meta">
+                                    <li class="timestamp">@dateTime.ToString("f")</li>
+                                </ul>
+
+								@{
+									if (item.HasValue("Image"))
+									{
+										Image image = Umbraco.TypedMedia(item.Image.Id);
+										<a href="@url" class="image image-full"><noscript data-slimmage><img src="@image.GetCropUrl(270, 100)" alt="News Picture" /></noscript></a>
+									}
+								}                        
+
+                                @Umbraco.Truncate(item.BodyText, 200)
+
+                                <a href="@url" class="button">@buttonText</a>
+                            </section>
+                        }
+
+                        @Umbraco.RenderMacro("Pages", pagesMacroParameters )
+                    </article>
+                    <!-- /Content -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="12u">
+                @{ Html.RenderPartial("umbFeatures"); }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Main -->

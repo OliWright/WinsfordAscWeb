@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="312.38mm" height="366.25mm" version="1.1" viewBox="0 0 312.38 366.25" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:osb="http://www.openswatchbook.org/uri/2009/osb" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+ <defs>
+  <marker id="marker2324" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2314" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2304" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2294" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2284" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2274" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2264" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2254" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2244" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2234" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2224" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2214" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2204" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2194" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2184" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2174" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2164" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2154" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2144" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2134" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2124" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2284-2" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+  <marker id="marker2294-8" overflow="visible" orient="auto">
+   <path transform="matrix(-.3 0 0 -.3 .69 0)" d="m8.7186 4.0337-10.926-4.0177 10.926-4.0177c-1.7455 2.3721-1.7354 5.6175-6e-7 8.0354z" fill="#feaaf8" fill-rule="evenodd" stroke="#feaaf8" stroke-linejoin="round" stroke-width=".625"/>
+  </marker>
+ </defs>
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g transform="translate(-2.5402 -33.213)" fill="#e2e2e2" stroke-width="0">
+  <path d="m31.858 169.28h60.854v7.9375h31.75v-7.9375h42.333v23.812h5.2917v10.583h-37.042v10.583h-103.19z"/>
+  <path d="m185.32 169.28h50.271v-2.6458h5.2917v15.875h5.2917l5.2917 7.9375 21.167 10.583v15.875h-2.6458v23.812h2.6458v2.6458l-2.6458 2.6458h-23.812v15.875h-68.792v-10.583h-7.9375v-23.812h-21.167v-13.229h31.75v-21.167h5.2917z"/>
+  <path d="m31.858 214.26h82.021v37.042h-82.021z"/>
+  <path d="m124.46 238.07h13.229v13.229h-13.229z"/>
+  <path d="m31.858 261.88h63.5v10.583h10.583v76.729h-74.083z"/>
+  <path d="m280.57 261.88h23.812v87.312h-13.229v15.875h-39.688v-15.875h29.104z"/>
+  <path d="m235.59 105.78h44.979v19.844h-44.979z"/>
+ </g>
+ <g transform="translate(-2.5402 -33.213)" fill="none" stroke="#ccc" stroke-width=".3">
+  <path d="m190.61 84.609h10.583"/>
+  <path d="m235.59 156.05v10.583"/>
+  <path d="m280.57 142.82v15.875"/>
+  <path d="m100.65 177.21h5.2917"/>
+  <path d="m111.23 177.21h5.2917"/>
+  <path d="m148.27 214.26h7.9375"/>
+  <path d="m125.78 206.32v7.9375"/>
+  <path d="m39.795 169.28h5.2917"/>
+  <path d="m53.024 169.28h7.9375"/>
+  <path d="m53.024 187.8h5.2917"/>
+  <path d="m31.858 169.28v7.9375"/>
+  <path d="m31.858 187.8v7.9375"/>
+  <path d="m31.858 206.32v7.9375"/>
+  <path d="m31.858 219.55v7.9375"/>
+  <path d="m137.69 214.26h10.583"/>
+  <path d="m209.13 198.38v5.2917"/>
+  <path d="m201.19 204.99v3.9688"/>
+  <path d="m240.88 246.01h5.2917"/>
+  <path d="m211.77 248.65h5.2917"/>
+  <path d="m300.41 214.26v23.812"/>
+  <path d="m308.35 214.26v23.812"/>
+  <path d="m280.57 261.88h10.583"/>
+  <path d="m248.82 261.88h10.583"/>
+  <path d="m280.57 261.88v7.9375"/>
+  <path d="m280.57 341.26v7.9375"/>
+  <path d="m222.36 349.19h10.583"/>
+  <path d="m172.09 349.19h10.583"/>
+  <path d="m92.712 349.19h7.9375"/>
+  <path d="m37.149 349.19h7.9375"/>
+  <path d="m31.858 251.3v10.583"/>
+  <path d="m39.795 251.3h5.2917"/>
+  <path d="m60.962 251.3h5.2917"/>
+  <path d="m137.69 224.84v7.9375"/>
+  <path d="m124.46 251.3h5.2917"/>
+  <path d="m113.88 238.07v5.2917"/>
+  <path d="m116.52 251.3h5.2917"/>
+  <path d="m150.92 251.3h5.2917"/>
+  <path d="m172.09 251.3h5.2917"/>
+ </g>
+ <g transform="translate(325.65 538.23)" stroke="#000" stroke-width=".5">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path d="m-296.33-486.83h158.75"/>
+   <path d="m-127-486.83h34.396v21.167h44.979v37.042m2e-6 15.875v26.458h23.812v29.104m0 23.812v111.12h-13.229v15.875h-39.688v-15.875h-18.521m-10.583 0h-39.688m-10.583 0h-71.437m-7.9375 0h-47.625m-7.9375 0h-5.2917l1e-5 -87.312m-1e-5 -10.583v-23.812m0-7.9375v-5.2917m0-7.9375v-10.583m0-7.9375v-10.583"/>
+   <path d="m-296.33-402.17v-84.667"/>
+  </g>
+  <path d="m-285.75-478.9h132.29v68.792h-132.29v-68.792" fill="#77baf7" fill-opacity=".20221" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m-137.58-478.9h37.042v68.792h-37.042z" fill="#77baf7" fill-opacity=".20221" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="none">
+   <g stroke-linecap="round" stroke-linejoin="round">
+    <path d="m-296.33-402.17h7.9375m5.2917-1e-5h7.9375m7.9375 0h15.875"/>
+    <path d="m-158.75-402.17-44.979-1e-5m111.12-63.5v50.271m-52.917 13.229h52.917v-2.6458h5.2917v15.875h5.2917v10.583h-10.583m0 10.583h10.583v10.583h-10.583m15.875-13.229h2.6458v13.229h-2.6458zm-2.6458 23.812h7.9375v15.875l-10.583 5.2917"/>
+    <path d="m-23.812-309.56h-13.229m-10.583 0h-21.167m-10.583 0h-71.438m-10.583 0h-60.854m-34.396-10.583h42.333m7.9375 0h2.6458m5.2917 0h7.9375v-18.521m0-7.9375v-10.583m10.583 0v37.042h2.6458m5.2917 0h13.229m7.9375 0h26.458v-2.6458h7.9375m5.2917 0h2.6458m7.9375 0h7.9375"/>
+    <path d="m-161.4-402.17v23.812h5.2917v10.583l-13.229 1e-5v-34.396m-15.875 5.2917h10.583v29.104h-10.583z"/>
+    <path d="m-142.87-402.17v23.812h-5.2917v10.583h13.229v-34.396m5.2917 0v10.583h7.9375v-10.583"/>
+    <path d="m-92.604-402.17v44.979h-79.375"/>
+    <path d="m-193.15-402.17v37.042h-10.583v-37.042m13.229 44.979h-105.83"/>
+    <path d="m-76.729-381 21.167 10.583v15.875h-2.6458v23.812h2.6458v2.6458l-2.6458 2.6458h-23.812"/>
+    <path d="m-29.104-357.19h10.583"/>
+    <path d="m-29.104-333.37h10.583"/>
+    <path d="m-158.75-320.15v-23.812h-21.167"/>
+    <path d="m-164.04-357.19v13.229"/>
+    <path d="m-142.87-357.19v21.167h5.2917v-21.167"/>
+    <path d="m-232.83-309.56v50.271h-5.2917v15.875h-58.208"/>
+    <path d="m-296.33-309.56h63.5"/>
+    <path d="m-222.25-222.25v-76.729"/>
+    <path d="m-37.042-301.62h-10.583v71.437h10.583"/>
+    <path d="m-296.33-383.65h21.167"/>
+    <path d="m-283.1-402.17v18.521"/>
+    <path d="m-269.87-383.65h42.333v26.458"/>
+    <path d="m-251.35-402.17v18.521"/>
+    <path d="m-235.48-402.17v18.521"/>
+    <path d="m-235.48-394.23h7.9375"/>
+    <path d="m-222.25-394.23h5.2917"/>
+    <path d="m-211.67-394.23h7.9375"/>
+    <path d="m-235.48-402.17h-15.875"/>
+    <path d="m-296.33-373.06h21.167v-10.583"/>
+    <path d="m-76.729-222.25h39.688"/>
+    <path d="m-256.65-320.15h-5.2917"/>
+    <path d="m-267.23-320.15h-15.875"/>
+    <path d="m-288.4-320.15h-7.9375"/>
+    <path d="m-190.5-333.37h-15.875"/>
+    <path d="m-203.73-333.37v13.229"/>
+    <path d="m-214.27-357.13-0.0468 23.753"/>
+    <path d="m-214.31-320.15v-7.9375"/>
+    <path d="m-240.77-357.19v23.812"/>
+    <path d="m-256.65-320.15v-37.042"/>
+    <path d="m-296.33-338.67h39.688"/>
+    <path d="m-92.604-322.79 5.2917-2.6458"/>
+    <path d="m-127-357.19v-5.2917"/>
+    <path d="m-127-366.45h7.9375v-1.3229"/>
+    <path d="m-119.06-373.06h26.458"/>
+    <path d="m-92.604-378.35h-22.49v-18.521h22.49"/>
+    <path d="m-119.06-373.06h-10.583v-11.906h7.9375v11.906"/>
+   </g>
+   <path d="m-92.604-445.82h44.979"/>
+  </g>
+ </g>
+ <g transform="translate(-160.19 -348.87)" display="none" fill="none" opacity=".5342" stroke="#feaaf8" stroke-linecap="round" stroke-width="3">
+  <path d="m337.87 696.02c-1.8899-23.363-2.4568-39.075-1.3229-56.696" marker-end="url(#marker2124)"/>
+  <path d="m279.35 591.97c-5.6166-3.0268-9.5229-4.117-11.779-5.0571-6.6251-2.7601-8.0341-7.7113-8.2212-11.827" marker-end="url(#marker2134)"/>
+  <path d="m251.5 572.61-66.146-0.75592" marker-end="url(#marker2144)"/>
+  <path d="m268.32 572.8 29.86-1.7009" marker-end="url(#marker2154)"/>
+  <path d="m268.32 572.8s4.808-0.40477 6.4256-3.9688c2.5903-5.7073 3.0238-19.655 3.0238-19.655" marker-end="url(#marker2164)"/>
+  <path d="m327.64 524.81c-8.7932 2.058-21.751-3.545-25.294 1.6819-2.195 3.238-0.75595 34.774-0.75595 34.774" marker-end="url(#marker2174)"/>
+  <path d="m304.8 572.8s5.0396-0.80798 6.4256-4.3468c1.5248-3.8931 1.7009-10.583 1.7009-10.583" marker-end="url(#marker2184)"/>
+  <path d="m304.8 572.8s16.897-2.0153 20.918 0.65832c5.8031 3.8587 5.3945 12.916 5.9184 19.563" marker-end="url(#marker2194)"/>
+  <path d="m411.96 592.07s-4.8638-17.715 0.56698-23.246c6.2292-6.3433 19.95 4.7131 26.647-1.1339 4.2912-3.7464 3.0238-16.82 3.0238-16.82" marker-end="url(#marker2204)"/>
+  <path d="m442.95 535s0.8579-15.875-3.2128-22.112c-2.5986-3.9815-9.8816-7.2174-11.534-11.675-2.6571-7.1688-3.7796-9.8678-8.0486-13.188" marker-end="url(#marker2214)"/>
+  <path d="m412 483.54c-5.7998-3.5547-12.391-3.9289-17.816-6.5481" marker-end="url(#marker2224)"/>
+  <path d="m389.65 473.39 0.37798-28.915" marker-end="url(#marker2234)"/>
+  <path d="m390.6 434.84s1.301-23.72-3.7798-28.348c-4.3723-3.9829-35.227-3.6694-41.027 0.44655" marker-end="url(#marker2244)"/>
+  <path d="m339.57 411.9-0.94304 27.85" marker-end="url(#marker2254)"/>
+  <path d="m339.01 448.82s1.3117 17.589-0.92974 28.915" marker-end="url(#marker2264)"/>
+  <path d="m334.66 486.24c0.0175 17.501 0.69408 27.485-2.0618 35.157" marker-end="url(#marker2274)"/>
+  <path d="m330.31 480.38s-40.441-0.92974-49.608 1.8766" marker-end="url(#marker2284)"/>
+  <path d="m255.96 483.94c-2.9934-5.2385-41.5-3.5623-41.5-3.5623" marker-end="url(#marker2294)"/>
+  <path d="m205.96 481.14s-7.3804 1.6765-8.5045-0.94494c-5.2902-12.338-2.0789-35.341-2.0789-35.341" marker-end="url(#marker2304)"/>
+  <path d="m217.03 418.36c1.5875-11.906 33.829-12.624 33.829-12.624" marker-end="url(#marker2314)"/>
+  <path d="m263.98 405.54s62.944-3.1881 69.867 0.74075" marker-end="url(#marker2324)"/>
+ </g>
+ <g transform="translate(-2.5402 -33.213)" display="none" fill="#000000" font-family="sans-serif" stroke-width=".26458">
+  <text x="124.43626" y="271.12689" font-size="5.2917px" text-anchor="middle" style="line-height:0" xml:space="preserve"><tspan x="124.43626" y="271.12689" text-align="center" style="line-height:1.25">WC</tspan><tspan x="124.43626" y="277.74149" text-align="center" style="line-height:1.25">or</tspan><tspan x="124.43626" y="284.35608" text-align="center" style="line-height:1.25">Exit Building</tspan></text>
+  <text x="253.04395" y="269.32825" font-size="5.2917px" text-anchor="middle" style="line-height:0" xml:space="preserve"><tspan x="253.04395" y="269.32825" text-align="center" style="line-height:1.25">To Pool</tspan><tspan x="253.04395" y="275.94284" text-align="center" style="line-height:1.25">for</tspan><tspan x="253.04395" y="282.55743" text-align="center" style="line-height:1.25">Warmup / Race</tspan></text>
+  <text transform="rotate(-90)" x="-129.74522" y="185.34264" font-size="10.583px" style="line-height:0" xml:space="preserve"><tspan x="-129.74522" y="185.34264" font-size="5.2917px" stroke-width=".26458" text-align="center" text-anchor="middle" style="line-height:1.25">Bag Drop</tspan></text>
+  <text x="59.104362" y="101.97929" font-size="5.2917px" text-anchor="middle" style="line-height:0" xml:space="preserve"><tspan x="59.104362" y="101.97929" text-align="center" style="line-height:1.25">Exit</tspan><tspan x="59.104362" y="108.59387" text-align="center" style="line-height:1.25">Pool</tspan></text>
+  <text x="179.95992" y="357.75079" font-size="10.583px" style="line-height:0" xml:space="preserve"><tspan x="179.95992" y="357.75079" font-size="5.2917px" stroke-width=".26458" text-align="center" text-anchor="middle" style="line-height:1.25">Enter Building</tspan></text>
+  <text x="17.754051" y="255.33919" font-size="5.2917px" text-anchor="middle" style="line-height:0" xml:space="preserve"><tspan x="17.754051" y="255.33919" text-align="center" style="line-height:1.25">Exit</tspan><tspan x="17.754051" y="261.95377" text-align="center" style="line-height:1.25">Building</tspan></text>
+  <text x="174.89561" y="270.11002" display="inline" font-size="5.2917px" text-anchor="middle" style="line-height:0" xml:space="preserve"><tspan x="174.89561" y="270.11002" text-align="center" style="line-height:1.25">Return</tspan><tspan x="174.89561" y="276.72461" text-align="center" style="line-height:1.25">to</tspan><tspan x="174.89561" y="283.3392" text-align="center" style="line-height:1.25">Hall</tspan></text>
+  <text x="152.84627" y="166.35962" display="inline" font-size="10.583px" style="line-height:0" xml:space="preserve"><tspan x="152.84627" y="166.35962" font-size="3.5278px" stroke-width=".26458" text-align="center" text-anchor="middle" style="line-height:1.25">Wave at Coach</tspan></text>
+  <text x="108.68193" y="172.77917" display="inline" font-size="10.583px" style="line-height:0" xml:space="preserve"><tspan x="108.68193" y="172.77917" font-size="3.5278px" stroke-width=".26458" text-align="center" text-anchor="middle" style="line-height:1.25">Holding Point</tspan></text>
+ </g>
+ <g transform="translate(-160.19 -348.87)" fill="none" opacity=".5342" stroke="#feaaf8" stroke-linecap="round" stroke-width="3">
+  <path d="m327.64 524.81c-8.7932 2.058-21.751-3.545-25.294 1.6819-2.195 3.238-0.75595 34.774-0.75595 34.774" marker-end="url(#marker2174)"/>
+  <path d="m304.8 572.8s16.897-2.0153 20.918 0.65832c5.8031 3.8587 5.3945 12.916 5.9184 19.563" marker-end="url(#marker2194)"/>
+  <path d="m339.57 411.9-0.94304 27.85" marker-end="url(#marker2254)"/>
+  <path d="m339.01 448.82s1.3117 17.589-0.92974 28.915" marker-end="url(#marker2264)"/>
+  <path d="m334.66 486.24c0.0175 17.501 0.69408 27.485-2.0618 35.157" marker-end="url(#marker2274)"/>
+  <path d="m217.03 418.36c1.5875-11.906 33.829-12.624 33.829-12.624" marker-end="url(#marker2314)"/>
+  <path d="m263.98 405.54s62.944-3.1881 69.867 0.74075" marker-end="url(#marker2324)"/>
+ </g>
+ <g transform="translate(-2.5402 -33.213)" fill="#000000" font-family="sans-serif" stroke-width=".26458">
+  <text transform="rotate(-90)" x="-129.74522" y="185.34264" font-size="10.583px" style="line-height:0" xml:space="preserve"><tspan x="-129.74522" y="185.34264" font-size="5.2917px" stroke-width=".26458" text-align="center" text-anchor="middle" style="line-height:1.25">Bag Pickup</tspan></text>
+  <text x="59.104362" y="101.97929" font-size="5.2917px" text-anchor="middle" style="line-height:0" xml:space="preserve"><tspan x="59.104362" y="101.97929" text-align="center" style="line-height:1.25">Exit</tspan><tspan x="59.104362" y="108.59387" text-align="center" style="line-height:1.25">Pool</tspan></text>
+  <text x="174.89561" y="270.11002" font-size="5.2917px" text-anchor="middle" style="line-height:0" xml:space="preserve"><tspan x="174.89561" y="270.11002" text-align="center" style="line-height:1.25">Return</tspan><tspan x="174.89561" y="276.72461" text-align="center" style="line-height:1.25">to</tspan><tspan x="174.89561" y="283.3392" text-align="center" style="line-height:1.25">Hall</tspan></text>
+ </g>
+ <g transform="translate(-160.19 -348.87)" display="none" fill="none" opacity=".5342" stroke="#feaaf8" stroke-linecap="round" stroke-width="3">
+  <path d="m411.96 592.07s-4.8638-17.715 0.56698-23.246c6.2292-6.3433 19.95 4.7131 26.647-1.1339 4.2912-3.7464 3.0238-16.82 3.0238-16.82" marker-end="url(#marker2204)"/>
+  <path d="m442.95 535s0.8579-15.875-3.2128-22.112c-2.5986-3.9815-9.8816-7.2174-11.534-11.675-2.6571-7.1688-3.7796-9.8678-8.0486-13.188" marker-end="url(#marker2214)"/>
+  <path d="m412 483.54c-5.7998-3.5547-12.391-3.9289-17.816-6.5481" marker-end="url(#marker2224)"/>
+  <path d="m389.65 473.39 0.37798-28.915" marker-end="url(#marker2234)"/>
+  <path d="m390.6 434.84s1.301-23.72-3.7798-28.348c-4.3723-3.9829-35.227-3.6694-41.027 0.44655" marker-end="url(#marker2244)"/>
+  <path d="m339.57 411.9-0.94304 27.85" marker-end="url(#marker2254)"/>
+  <path d="m339.01 448.82s1.3117 17.589-0.92974 28.915" marker-end="url(#marker2264)"/>
+  <path d="m205.96 481.14s-7.3804 1.6765-8.5045-0.94494c-5.2902-12.338-2.0789-35.341-2.0789-35.341" marker-end="url(#marker2304)"/>
+  <path d="m330.38 480.49s-40.441-0.92974-49.608 1.8766" display="inline" marker-end="url(#marker2284-2)" opacity=".5342"/>
+  <path d="m256.03 484.05c-2.9934-5.2385-41.5-3.5623-41.5-3.5623" display="inline" marker-end="url(#marker2294-8)" opacity=".5342"/>
+ </g>
+ <g transform="translate(-2.5402 -33.213)" display="none" fill="#000000" font-family="sans-serif" stroke-width=".26458">
+  <text x="253.04395" y="269.32825" font-size="5.2917px" text-anchor="middle" style="line-height:0" xml:space="preserve"><tspan x="253.04395" y="269.32825" text-align="center" style="line-height:1.25">To Pool</tspan><tspan x="253.04395" y="275.94284" text-align="center" style="line-height:1.25">for</tspan><tspan x="253.04395" y="282.55743" text-align="center" style="line-height:1.25">Warmup / Race</tspan></text>
+  <text transform="rotate(-90)" x="-129.74522" y="185.34264" font-size="10.583px" style="line-height:0" xml:space="preserve"><tspan x="-129.74522" y="185.34264" font-size="5.2917px" stroke-width=".26458" text-align="center" text-anchor="middle" style="line-height:1.25">Bag Drop</tspan></text>
+  <text x="152.84627" y="166.35962" display="inline" font-size="10.583px" style="line-height:0" xml:space="preserve"><tspan x="152.84627" y="166.35962" font-size="3.5278px" stroke-width=".26458" text-align="center" text-anchor="middle" style="line-height:1.25">Wave at Coach</tspan></text>
+  <text x="108.67651" y="172.77246" display="inline" font-size="10.583px" style="line-height:0" xml:space="preserve"><tspan x="108.67651" y="172.77246" font-size="3.5278px" stroke-width=".26458" text-align="center" text-anchor="middle" style="line-height:1.25">Holding Point</tspan></text>
+ </g>
+ <g transform="translate(-160.19 -348.87)" display="none" fill="none" opacity=".5342" stroke="#feaaf8" stroke-linecap="round" stroke-width="3">
+  <path d="m337.87 696.02c-1.8899-23.363-2.4568-39.075-1.3229-56.696" marker-end="url(#marker2124)"/>
+  <path d="m279.35 591.97c-5.6166-3.0268-9.5229-4.117-11.779-5.0571-6.6251-2.7601-8.0341-7.7113-8.2212-11.827" marker-end="url(#marker2134)"/>
+  <path d="m251.5 572.61-66.146-0.75592" marker-end="url(#marker2144)"/>
+ </g>
+ <g transform="translate(-2.5402 -33.213)" display="none" fill="#000000" font-family="sans-serif" stroke-width=".26458">
+  <text x="124.43626" y="271.12689" font-size="5.2917px" text-anchor="middle" style="line-height:0" xml:space="preserve"><tspan x="124.43626" y="271.12689" text-align="center" style="line-height:1.25">WC</tspan><tspan x="124.43626" y="277.74149" text-align="center" style="line-height:1.25">or</tspan><tspan x="124.43626" y="284.35608" text-align="center" style="line-height:1.25">Exit Building</tspan></text>
+  <text x="179.95992" y="357.75079" font-size="10.583px" style="line-height:0" xml:space="preserve"><tspan x="179.95992" y="357.75079" font-size="5.2917px" stroke-width=".26458" text-align="center" text-anchor="middle" style="line-height:1.25">Enter Building</tspan></text>
+  <text x="17.754051" y="255.33919" font-size="5.2917px" text-anchor="middle" style="line-height:0" xml:space="preserve"><tspan x="17.754051" y="255.33919" text-align="center" style="line-height:1.25">Exit</tspan><tspan x="17.754051" y="261.95377" text-align="center" style="line-height:1.25">Building</tspan></text>
+ </g>
+ <g transform="translate(-160.19 -348.87)" fill="#000000" font-family="sans-serif">
+  <text x="266.98627" y="440.21957" font-size="8.8194px" stroke-width=".066146" text-anchor="middle" style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:1.25" xml:space="preserve"><tspan x="266.98627" y="440.21957" text-align="center" style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal">Main</tspan><tspan x="266.98627" y="451.2439" text-align="center" style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal">Pool</tspan></text>
+  <text x="367.65323" y="440.76761" font-size="8.8194px" stroke-width=".066146" text-anchor="middle" style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:1.25" xml:space="preserve"><tspan x="367.65323" y="440.76761" text-align="center" style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal">Small</tspan><tspan x="367.65323" y="451.79193" text-align="center" style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal">Pool</tspan></text>
+  <g stroke-width=".26458">
+   <text x="323.9548" y="625.255" font-size="10.583px" style="line-height:1.25" xml:space="preserve"><tspan x="323.9548" y="625.255" stroke-width=".26458">Sports Hall</tspan></text>
+   <text x="283.75693" y="541.16016" font-size="3.5278px" text-anchor="middle" style="line-height:0" xml:space="preserve"><tspan x="283.75693" y="541.16016" text-align="center" style="line-height:1.25">Female</tspan><tspan x="283.75693" y="545.56989" text-align="center" style="line-height:1.25">WC</tspan></text>
+   <text x="437.44135" y="543.88806" font-size="10.583px" style="line-height:0" xml:space="preserve"><tspan x="437.44135" y="543.88806" font-size="3.5278px" stroke-width=".26458" text-align="center" text-anchor="middle" style="line-height:1.25">Reception</tspan></text>
+   <text x="315.8786" y="709.96411" font-size="10.583px" style="line-height:1.25" xml:space="preserve"><tspan x="315.8786" y="709.96411" stroke-width=".26458">Car Park</tspan></text>
+   <text x="317.71738" y="552.22241" font-size="3.5278px" text-anchor="middle" style="line-height:0" xml:space="preserve"><tspan x="317.71738" y="552.22241" text-align="center" style="line-height:1.25">Male</tspan><tspan x="317.71738" y="556.63214" text-align="center" style="line-height:1.25">WC</tspan></text>
+   <text x="334.02774" y="494.72583" font-size="3.5278px" text-anchor="middle" style="line-height:0" xml:space="preserve"><tspan x="334.02774" y="494.72583" text-align="center" style="line-height:1.25">Pool</tspan><tspan x="334.02774" y="499.13553" text-align="center" style="line-height:1.25">Exit</tspan></text>
+   <text x="218.44566" y="493.42694" font-size="3.5278px" text-anchor="middle" style="line-height:0" xml:space="preserve"><tspan x="218.44566" y="493.42694" text-align="center" style="line-height:1.25">Timing</tspan><tspan x="218.44566" y="497.83664" text-align="center" style="line-height:1.25">Sauna</tspan></text>
+   <text x="304.69351" y="488.74973" font-size="10.583px" style="line-height:0" xml:space="preserve"><tspan x="304.69351" y="488.74973" font-size="3.5278px" stroke-width=".26458" text-align="center" text-anchor="middle" style="line-height:1.25">Coach Cage</tspan></text>
+  </g>
+ </g>
+ <g transform="translate(-2.5402 -33.213)" fill="#ffe444" stroke="#fabb75" stroke-linecap="round" stroke-linejoin="round">
+  <path d="m207.89 168.65-2.413-2.4361-2.6206 2.3519 1.5712-3.0476-3.0466-1.7656 3.384 0.55253 0.73774-3.4431 0.52024 3.3891 3.5026-0.36234-3.0625 1.5421z" stroke-width=".322"/>
+  <g stroke-width=".322">
+   <path d="m264.74 159.36-2.413-2.4361-2.6206 2.3519 1.5712-3.0476-3.0466-1.7656 3.384 0.55253 0.73774-3.4431 0.52024 3.3891 3.5026-0.36234-3.0625 1.5421z"/>
+   <path d="m269.79 272.18-2.413-2.4361-2.6206 2.3519 1.5712-3.0477-3.0466-1.7656 3.384 0.55252 0.73774-3.4431 0.52024 3.3891 3.5026-0.36234-3.0625 1.5421z"/>
+   <path d="m238.17 271.8-2.413-2.4361-2.6206 2.3519 1.5712-3.0476-3.0466-1.7656 3.384 0.55252 0.73774-3.4431 0.52024 3.3891 3.5026-0.36235-3.0625 1.5421z"/>
+   <path d="m162.21 271.24-2.413-2.4361-2.6207 2.3519 1.5712-3.0476-3.0466-1.7656 3.384 0.55252 0.73774-3.4431 0.52024 3.3891 3.5026-0.36235-3.0625 1.5421z"/>
+   <path d="m136.02 271.43-2.413-2.4361-2.6207 2.3519 1.5712-3.0476-3.0466-1.7656 3.384 0.55252 0.73774-3.4431 0.52024 3.3891 3.5026-0.36234-3.0625 1.5421z"/>
+   <path d="m148.93 257.21-2.413-2.4361-2.6206 2.3519 1.5712-3.0477-3.0466-1.7656 3.384 0.55252 0.73774-3.4431 0.52024 3.3891 3.5026-0.36235-3.0625 1.5421z"/>
+   <path d="m188.47 212.79-2.413-2.4361-2.6206 2.3519 1.5712-3.0476-3.0466-1.7656 3.384 0.55253 0.73774-3.4431 0.52024 3.3891 3.5026-0.36235-3.0625 1.5421z"/>
+  </g>
+ </g>
+ <g transform="translate(-2.5402 -33.213)">
+  <path d="m50.855 50.755-3.8858-3.923-4.2203 3.7875 2.5302-4.9079-4.9062-2.8433 5.4496 0.88977 1.188-5.5447 0.83778 5.4578 5.6405-0.58351-4.9318 2.4833z" fill="#ffe444" stroke-width="0"/>
+  <text x="58.558754" y="48.081768" fill="#000000" font-family="sans-serif" font-size="10.583px" stroke-width=".26458" style="line-height:1.25" xml:space="preserve"><tspan x="58.558754" y="48.081768">- Marshall</tspan><tspan x="58.558754" y="61.310894">- Swimmer Route</tspan><tspan x="58.558754" y="74.540016">- Out of Bounds</tspan></text>
+  <path d="m52.035 59.136c-7.7289-4.2295-9.135 1.6748-14.232-2.6278" fill="none" opacity=".5342" stroke="#feaaf8" stroke-linecap="round" stroke-width="3"/>
+  <path d="m39.716 67.911h14.352v7.4619h-14.352z" fill="#e2e2e2" stroke-width="0"/>
+ </g>
+</svg>

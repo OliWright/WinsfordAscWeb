@@ -1,0 +1,73 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@using Examine.LuceneEngine.SearchCriteria;
+
+@functions{
+
+}
+@{
+
+    if (string.IsNullOrEmpty(Request.QueryString["search"]))
+    {
+        <h4>Empty search</h4>
+    }
+    else
+    {
+        //Fetching our SearchProvider by giving it the name of our searchprovider
+        Examine.ISearcher Searcher = Examine.ExamineManager.Instance.SearchProviderCollection["SiteSearcher"];
+
+        // Build the query
+        Examine.SearchCriteria.ISearchCriteria searchCriteria = Searcher.CreateSearchCriteria(Examine.SearchCriteria.BooleanOperation.And);
+        System.String q = Request.QueryString["search"];
+        Examine.SearchCriteria.ISearchCriteria query = searchCriteria
+            .Field("nodeName", q.Boost(1)).Or()
+            .Field("title", q.Boost(1)).Or()
+            .Field("synopsis", q.Boost(1)).Or()
+            .Field("description", q.Fuzzy()).Or()
+            .Field("bodyTest", q.Fuzzy()).And()
+            .OrderByDescending("sortDate")
+            .Compile();
+
+        //Searching and ordering the result by score, and we only want to get the results that has a minimum of 0.05(scale is up to 1.)
+        //System.Collections.Generic.IEnumerable<SearchResult> searchResults = Searcher.Search(query).OrderByDescending(x => x.Score).TakeWhile(x => x.Score > 0.01f);
+        System.Collections.Generic.IEnumerable<SearchResult> searchResults = Searcher.Search(query);
+
+        if ( searchResults.Any() )
+        {
+            <ul class="style2">
+                @foreach (Examine.SearchResult result in searchResults)
+        {
+            IPublishedContent item = Umbraco.TypedContent(result.Fields["id"]);
+            if( !item.GetPropertyValue<bool>("hideFromSearchResults") )
+            {
+                string title = item.GetPropertyValue<string>("title");
+                if (string.IsNullOrWhiteSpace(title))
+                {
+                    title = item.Name;
+                }
+
+                // If the editor has not explicitly set the publishDate property then show the create date
+                DateTime dateTime = item.GetPropertyValue<DateTime>("publishDate");
+                if( dateTime == default(DateTime) )
+                {
+                    dateTime = item.CreateDate;
+                }
+
+                        <li>
+                        <article class="is-post-summary">
+                            <h3><a href="@item.Url">@title</a></h3>
+                            <ul class="meta">
+                                <li class="timestamp">@dateTime.ToString("f")</li>
+                            </ul>
+                        </article>
+                        </li>
+                    }
+    }
+            </ul>
+        }
+        else
+    {
+            <p>There are no results. Not even one. Told you it was pants.</p>
+        }
+
+    }
+}

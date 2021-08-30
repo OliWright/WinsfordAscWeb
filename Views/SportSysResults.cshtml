@@ -1,0 +1,194 @@
+﻿@inherits UmbracoTemplatePage
+@{
+    Layout = "umbLayout.cshtml";
+	// Why does this keep reverting?
+
+    // If the editor has not explicitly provided the "Page title" property page 
+    // then just show the name of the page otherwise show the provided title
+    var pageTitle = string.IsNullOrWhiteSpace(CurrentPage.Title)
+        ? CurrentPage.Name
+        : CurrentPage.Title;
+
+	string rootFolder = CurrentPage.rootFolder;
+}
+<div id="main-wrapper">
+    <div id="main" class="container">
+        <div class="row">
+            <!-- Content -->
+            <article class="is-page-content">
+                <header>
+                    <h2>@pageTitle</h2>
+                </header>
+                <section>
+                    @CurrentPage.BodyText
+                </section>
+                <section id="ss-container">
+                </section>
+            </article>
+            <!-- /Content -->
+        </div>
+    </div>
+</div>
+<script>
+    var ssContainer;
+    var rootFolder = "@rootFolder";
+    var refreshTimeout;
+    var currentPage;
+    var scrollTop = 0;
+    var popScrollTop = 0; // Where to scroll to on window state pop
+
+    function linkClicked(e) {
+        var href;
+        var target = e.target || e.srcElement;
+
+        //tell the browser not to respond to the link click
+        e.preventDefault();
+
+        href = target.getAttribute('href');
+
+        scrollTop = 0;
+        popScrollTop = (window.pageYOffset || document.documentElement.scrollTop);
+    
+        // Push the link onto the window history
+        var url = '?page=' + href;
+        url += '&popScroll=' + popScrollTop;
+        window.history.pushState('', '', url);
+
+        loadSportSysPage(href);
+    }
+
+    function removeFinalDiv(text, currentEnd) {
+        var potentialDivClosure = text.substring(currentEnd - 6 - 2, currentEnd - 2);
+        var newEnd = currentEnd;
+        if (potentialDivClosure == '</div>') {
+            var divStart = text.lastIndexOf('<div', currentEnd - 6 - 2);
+            if (divStart != -1) {
+                newEnd = divStart;
+            }
+        }
+        return newEnd;
+    }
+
+    // Asynchronously load a sportsystem page
+    function loadSportSysPage(page) {
+        var html;
+        if(refreshTimeout != null) {
+            window.clearTimeout(refreshTimeout);
+            refreshTimeout = null;
+        }
+        if(page != currentPage)
+        {
+            // Remove the existing content and replace it with a loading message
+            currentPage = page;
+            var html = '<p>Loading ';
+            html += rootFolder + '/';
+            html += page;
+            html += '</p>';
+            var height = ssContainerElement.clientHeight;
+            if(height != 0) { ssContainerElement.style.height = String(height) + "px"; }
+            ssContainerElement.innerHTML = html;
+        }
+
+        var request = new XMLHttpRequest();
+        request.onload = function (e) {
+            html = '<p>Error parsing sportsys page</p>'; // Default html if things go wrong
+            // Cut out the body from the html
+            // This is hard-coded from what we know sport-system html pages to look like
+            var bodyStart = this.responseText.indexOf('<BODY');
+            if(bodyStart == -1) {bodyStart = this.responseText.indexOf('<body');}
+            if (bodyStart != -1) {
+                bodyStart += 5;
+                bodyStart = this.responseText.indexOf('>', bodyStart);
+                if (bodyStart != -1) {
+                    bodyStart += 1;
+                    var bodyEnd = this.responseText.indexOf('</BODY', bodyStart);
+                    if(bodyEnd == -1) {bodyEnd = this.responseText.indexOf('</body', bodyStart);}
+                    if (bodyEnd != -1) {
+                        if( this.responseText.indexOf('Live Results Service', bodyStart) != -1 )
+                        {
+                            // Set a timeout to re-load the current page
+                            html = this.responseText.substring(bodyStart, bodyEnd);
+                            refreshTimeout = window.setTimeout( function() { loadSportSysPage(page); }, 60000 )
+                        }
+                        else if( this.responseText.indexOf('Result not available at present', bodyStart) != -1 )
+                        {
+                            // Remove the final two divs (keep the event name), and add our own message
+                            bodyEnd = removeFinalDiv(this.responseText, bodyEnd);
+                            bodyEnd = removeFinalDiv(this.responseText, bodyEnd);
+                            html = this.responseText.substring(bodyStart, bodyEnd);
+                            html += "<p>Results aren't available yet.</p><p>They should appear here as soon as they are available though, so you shouldn't need to refresh the page.</p>"
+
+                            // Set a timeout to re-load the current page
+                            refreshTimeout = window.setTimeout( function() { loadSportSysPage(page); }, 20000 )
+                        }
+                        else
+                        {
+                            // If the text ends in a div, then it's a '#' link that we can remove
+                            bodyEnd = removeFinalDiv(this.responseText, bodyEnd)
+                            html = this.responseText.substring(bodyStart, bodyEnd);
+                        }
+                    }
+                }
+            }
+            // Insert it into our document
+            ssContainerElement.innerHTML = html;
+            ssContainerElement.style.height = "auto";
+
+            document.documentElement.scrollTop = document.body.scrollTop = scrollTop;
+
+            // Add an onclick event to each link
+            var forEach = Array.prototype.forEach;
+            var links = ssContainerElement.getElementsByTagName('a');
+            forEach.call(links, function (link) {
+                link.onclick = linkClicked;
+            });
+        };
+        request.onerror = function (e) {
+            console.error(this.statusText);
+            html = '<p>Error loading sportsys page</p><p>';
+            html += this.statusText;
+            html += '</p>';
+            ssContainerElement.innerHTML = html;
+        };
+        request.open("GET", rootFolder + '/' + page, true);
+        request.send();
+    }
+
+    function showPage(page) {
+        // Push the link onto the window history
+        var url = '?page=' + page;
+        window.history.pushState('', '', url);
+
+        loadSportSysPage(page);
+    }
+
+    function parseUrl() {
+        var options = {}
+        location.search.substr(1).split("&").forEach(function (item) { options[item.split("=")[0]] = item.split("=")[1] })
+        popScrollTop = 0;
+        scrollTop = 0;
+        if(options.popScroll !== undefined) {
+            popScrollTop = parseInt(options.popScroll);
+        }
+        if(options.page !== undefined) {
+            loadSportSysPage(options.page);
+        }
+        else {
+            loadSportSysPage("before.htm");
+        }
+    }
+
+    window.onpopstate = function () {
+        var newScrollTop = popScrollTop;
+        parseUrl();
+        scrollTop = newScrollTop;
+    }
+
+    skel.on('ready', function () {
+        ssContainerElement = document.getElementById("ss-container");
+        parseUrl();
+    }
+    );
+
+</script>
+<!-- /Main -->

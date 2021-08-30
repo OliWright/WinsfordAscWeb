@@ -1,0 +1,126 @@
+﻿@inherits UmbracoTemplatePage
+@using Umbraco.Web.Models;
+@{
+    Layout = null;
+
+    int numItemsPerPage = 10;
+    int pageIdx; // Zero-based index of page we are viewing
+
+    if (!int.TryParse(Request.QueryString["page"],out pageIdx))
+    {
+        pageIdx = 1;
+    }
+    --pageIdx; // We're zero based
+
+	// The current page is the news overview page
+    var newsOverview = CurrentPage;
+
+    // Similar to above: find all pages with document type umbNewsItem under the news overview page
+    // Then order them, first by publishDate (a property the editor can explicitly set on the news item)
+    // and then by createDate, which is set by Umbraco automatically when a page gets created.
+    DynamicPublishedContentList newsItems = newsOverview.umbNewsItems;
+   	DynamicPublishedContentList updateNotifications = CurrentPage.AncestorsOrSelf(1).First().Children( "updateNotificationCollection" ).First().Children( "updateNotification" );
+    IQueryable<IPublishedContent> allNewsItems = newsItems.Concat( updateNotifications ).OrderBy("publishDate desc, createDate desc");
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    @{ Html.RenderPartial("standardHead"); }
+    <script id="news-items" type="application/xml">
+        <newsItems>
+            @foreach( var newsItem in allNewsItems )
+            {
+                <item>@newsItem.Id</item>
+            }
+        </newsItems>
+    </script>
+</head>
+<body class="homepage" id="root">
+    @{ Html.RenderPartial("header"); }
+
+    <!-- Main -->
+    <div id="main-wrapper">
+        <div id="main" class="container">
+            <div class="row">
+                <div class="12u skel-cell-mainContent">
+                    <div class="content">
+                        <!-- Content -->
+                        <article class="is-page-content">
+                            <header>
+                                <h2>News</h2>
+                            </header>
+                            <div id="postswrapper"></div>
+                            <div id="loadmoreajaxloader" style="display:none;">Loading</div>
+                        </article>
+                        <!-- /Content -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @{ Html.RenderPartial("footer"); }
+
+    <script type="text/javascript">
+
+        //  Parse the news-items XML island
+        var newsItemsText = document.getElementById("news-items").textContent;
+        var parser = new DOMParser();
+        var newsItemsXml = parser.parseFromString(newsItemsText, "application/xml");
+        var newsItemElements = newsItemsXml.getElementsByTagName("item");
+        var numNewsItems = newsItemElements.length;
+        var currentNewsItemIdx = 0;
+        var postsWrapperElement = document.getElementById("postswrapper");
+        var numAjaxRequestsInProgress = 0;
+
+        function shouldLoadMoreContent() {
+            // Figure out if we're close to the bottom of the page
+            var docHeight = document.body.offsetHeight;
+            docHeight = docHeight == undefined ? window.document.documentElement.scrollHeight : docHeight;
+
+            var windowHeight = window.innerHeight;
+            windowHeight = windowHeight == undefined ? document.documentElement.clientHeight : windowHeight;
+
+            var scrollTop = window.scrollY;
+            scrollTop = scrollTop == undefined ? window.document.documentElement.scrollTop : scrollTop;
+
+            var numPixelsFromBottom = docHeight - (scrollTop + windowHeight);
+            return (numPixelsFromBottom < 150);
+        }
+
+        function loadAnotherItem() {
+            if ((numAjaxRequestsInProgress < 3) && (currentNewsItemIdx < numNewsItems)) {
+                var itemId = newsItemElements[currentNewsItemIdx++].textContent;
+
+                var html = '<div id="item' + itemId + '">Loading more news items...</div>';
+                $(postsWrapperElement).append(html);
+
+                ++numAjaxRequestsInProgress;
+                $.ajax({
+                    url: "InfiniteScrollItem?itemId=" + itemId,
+                    success: function (html) {
+                        $('div#item' + itemId).html(html);
+                        --numAjaxRequestsInProgress;
+                        if (shouldLoadMoreContent()) {
+                            loadAnotherItem();
+                        }
+                    }
+                });
+            }
+        }
+
+        // Load a few items to start the page off...
+        for (var i = 0; i < 5; ++i) {
+            loadAnotherItem();
+        }
+
+        $(window).scroll(function () {
+            if (shouldLoadMoreContent()) {
+                loadAnotherItem();
+            }
+        });
+    </script>
+</body>
+
+</html>

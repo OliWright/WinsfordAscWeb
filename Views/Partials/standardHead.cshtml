@@ -1,0 +1,82 @@
+﻿@inherits UmbracoTemplatePage
+@using ClientDependency.Core.Mvc;
+
+@{
+    @*Html.RequiresJs("/js/jquery.min.js");*@
+    Html.RequiresJs("/umbraco_client/ui/jquery.js",1);
+    Html.RequiresJs("/js/config.js",1);
+    Html.RequiresJs("/js/skel.min.js",1);
+    @*Html.RequiresJs("/js/skel-panels-oli.js");*@
+    @*Html.RequiresJs("/scripts/slimmage.js");*@
+	
+    var pageTitle = string.IsNullOrWhiteSpace(CurrentPage.title)
+        ? CurrentPage.name
+        : CurrentPage.title;
+    var description = string.IsNullOrWhiteSpace(CurrentPage.description)
+        ? pageTitle
+        : CurrentPage.description;
+    var ogTitle = CurrentPage.name;
+    if( CurrentPage.name == "Home" )
+    {
+        // Special case for home page
+        pageTitle = "Winsford ASC";
+    }
+    else
+    {
+        pageTitle = CurrentPage.name + " | Winsford ASC";
+    }
+
+    string ogImageUrl = "http://winsfordasc.co.uk/media/1109/dsc_0956.jpg"; // Default full squad picture
+    if (CurrentPage.HasValue("Image"))
+    {
+        ogImageUrl = "http://winsfordasc.co.uk" + Umbraco.TypedMedia(CurrentPage.Image.Id).Url;
+    }
+}
+
+    <title>@pageTitle</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="refresh" content="21600"> @* Refresh page every 6 hours *@
+    <meta name="description" content="@description" />
+    <meta name="keywords" content="Winsford,Swimming,Club,ASC,WASC" />
+    <meta property="og:title" content="@ogTitle">
+    <meta property="og:image" content="@ogImageUrl">
+    <meta property="og:description" content="@description">
+    <meta property="og:site_name" content="Winsford Swimming Club">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Open+Sans+Condensed:700" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <noscript> <!-- If JavaScript is disabled, then load CSS as for a desktop -->
+        <link rel="stylesheet" href="/css/skel.css" />
+        <link rel="stylesheet" href="/css/style-desktop.css" />
+    </noscript>
+
+    @Html.Raw(@Html.RenderCssHere())
+    @Html.Raw(@Html.RenderJsHere())
+
+    @* This is strange.  It looks like if slimmage.js is included using Html.RequiresJs, then it doesn't
+        quite work properly.   We sometimes get pictures missing until the page is resized.
+        But if we just include it directly here, then it works.
+        Requires further investigation.  *@
+    <script type="text/javascript" src="/scripts/slimmage.js"></script>
+    <script type="text/javascript" src="/js/wasc.js"></script>
+
+	<link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-touch-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-touch-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-touch-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-touch-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-touch-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-touch-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-touch-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon-180x180.png">
+	<link rel="icon" type="image/png" href="/icons/favicon-192x192.png" sizes="192x192">
+	<link rel="icon" type="image/png" href="/icons/favicon-160x160.png" sizes="160x160">
+	<link rel="icon" type="image/png" href="/icons/favicon-96x96.png" sizes="96x96">
+	<link rel="icon" type="image/png" href="/icons/favicon-16x16.png" sizes="16x16">
+	<link rel="icon" type="image/png" href="/icons/favicon-32x32.png" sizes="32x32">
+	<meta name="msapplication-TileColor" content="#9f00a7">
+	<meta name="msapplication-TileImage" content="/icons/mstile-144x144.png">
+
+    <!--[if lte IE 9]><link rel="stylesheet" href="/css/ie9.css" /><![endif]-->
+    <!--[if lte IE 8]><script src="/js/html5shiv.js"></script><link rel="stylesheet" href="/css/ie8.css" /><![endif]-->
+    <!--[if lte IE 7]><link rel="stylesheet" href="/css/ie7.css" /><![endif]-->
