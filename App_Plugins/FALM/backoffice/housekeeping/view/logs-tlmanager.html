@@ -1,0 +1,116 @@
+﻿<umb-panel class="falmhk tracelogs" ng-controller="FALMHousekeepingLogsTLManagerController as vm">
+    <umb-header id="falm-header">
+        <div class="umb-panel-header-content-wrapper">
+            <div class="umb-panel-header-content">
+                <div class="umb-panel-header-left-side -top-position" ng-class="{'-top-position': tabs || !icon }">
+                    <div class="umb-panel-header-title-wrapper">
+                        <div class="umb-panel-header-name ng-scope ng-binding">F.A.L.M. Housekeeping</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </umb-header>
+    <umb-content id="falm-content">
+        <div class="umb-panel-body with-header umb-scrollable no-footer" style="padding: 0 20px; margin-top: 19px;">
+            <h3 class="title"><localize key="FALM_LogsManager.Title_TL">Umbraco Logs Manager (Trace Log)</localize></h3>
+            <div class="description">
+                <localize key="FALM_LogsManager.Description_TL">With this tool you can view the Umbraco Trace Logs events</localize>
+            </div>
+            <div ng-switch="vm.id">
+                <!-- SEARCH PANEL -->
+                <div ng-show="vm.showSearchPanel" class="searchPanel">
+                    <!-- LIST TRACE LOGS -->
+                    <div ng-show="vm.tracelogs.logsItems.length" class="panel panel-default">
+                        <div class="panel-heading">
+                            <localize key="FALM_LogsManager.TraceLogsPanelTitle">Trace Log</localize> <strong><i>"{{ vm.id }}"</i></strong> <localize key="FALM_LogsManager.Contains">contains</localize> <span class="badge">{{ vm.tracelogs.itemCount }}</span> <localize key="FALM_LogsManager.Events">events</localize>
+                        </div>
+                        <div class="panel-body">
+                            <form id="filterLogsForm" ng-submit="vm.filterTraceLogs()" role="form" class="form-inline">
+                                <div>
+                                    <label for="search" class="sr-only"><localize key="FALM_LogsManager.SearchLabel">Search:</localize></label>
+                                    <div class="input-group" style="float: left; margin-right: 10px;">
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-search"></span>
+                                        </div>
+                                        <input type="text" ng-model="vm.q" id="search" class="form-control" style="-webkit-border-top-right-radius: 4px !important; -webkit-border-bottom-right-radius: 4px !important; -moz-border-radius-topright: 4px !important; -moz-border-radius-bottomright: 4px !important; border-top-right-radius: 4px !important; border-bottom-right-radius: 4px !important; width: 300px; height: 32px !important;"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="itemsPerPage" style="vertical-align: bottom;"><localize key="FALM_LogsManager.ItemsPerPage">Items per page:</localize></label>
+                                        <select ng-model="vm.tracelogs.itemsPerPage" id="itemsPerPage" class="form-control" style="-webkit-border-top-right-radius: 4px !important; -webkit-border-bottom-right-radius: 4px !important; -moz-border-radius-topright: 4px !important; -moz-border-radius-bottomright: 4px !important; border-radius: 4px !important; height: 32px !important;">
+                                            <option value="10">10</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                            <option value="300">300</option>
+                                            <option value="500">500</option>
+                                            <option value="1000">1000</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" id="btnFilterLogs" name="btnFilterLogs" class="btn btn-danger">
+                                            <localize key="FALM_LogsManager.StartFilterLogs">Filter Logs</localize>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <div id="FHLogTable" class="umb-table" style="margin-bottom: 15px;">
+                                <div class="umb-table-head">
+                                    <div class="umb-table-row">
+                                        <div class="umb-table-cell not-fixed flx-b1"><localize key="FALM_LogsManager.Date">Date</localize></div>
+                                        <div class="umb-table-cell not-fixed flx-b1"><localize key="FALM_LogsManager.Level">Type</localize></div>
+                                        <div class="umb-table-cell not-fixed flx-b3"><localize key="FALM_LogsManager.Logger">Logger</localize></div>
+                                        <div class="umb-table-cell not-fixed flx-b5"><localize key="FALM_LogsManager.Message">Details</localize></div>
+                                    </div>
+                                </div>
+                                <div class="umb-table-body">
+                                    <div class="umb-table-row" ng-click="vm.openDetailsModal(logItem, vm.tracelogs.logsItems)" ng-repeat="logItem in vm.tracelogs.logsItems" current-page="vm.tracelogs.pagination.pageNumber">
+                                        <div class="umb-table-cell not-fixed flx-b1">{{ logItem.Date | date: 'dd/MM/yyyy' }}<br />{{ logItem.Date | date: 'HH:mm:ss' }}</div>
+                                        <div class="umb-table-cell not-fixed flx-b1"><span ng-class="vm.getLabelType(logItem.Level)">{{ logItem.Level }}</span></div>
+                                        <div class="umb-table-cell not-fixed flx-b3">{{ logItem.Logger | limitTo:40 }}<span ng-if="logItem.Logger.length > 40">...</span></div>
+                                        <div class="umb-table-cell not-fixed flx-b5">{{ logItem.Message | limitTo:40 }}<span ng-if="logItem.Message.length > 40">...</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex justify-center items-center">
+                                <umb-pagination ng-if="vm.tracelogs.pagination.totalPages > 1 && !vm.showLoader"
+                                                page-number="vm.tracelogs.pagination.pageNumber"
+                                                total-pages="vm.tracelogs.pagination.totalPages"
+                                                on-next="vm.nextPage"
+                                                on-prev="vm.prevPage"
+                                                on-go-to-page="vm.goToPage">
+                                </umb-pagination>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NO LOGS FOUND -->
+                    <div ng-show="vm.showNoTraceLogsFound" class="noLogsFound">
+                        <!-- PANEL: No TRACE Logs Found -->
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <localize key="FALM_LogsManager.TLLogsPanelTitle">Trace Log events</localize>
+                            </div>
+                            <div class="panel-body">
+                                <p><localize key="FALM_LogsManager.NoLogsFound">No Logs found.</localize></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RESTART SEARCH -->
+                <div ng-show="!vm.showLoader" class="restartSearch">
+                    <a ng-click="vm.reloadRoute()" class="btn btn-default">
+                        <localize key="FALM_LogsManager.RestartSearchLogs">Reload</localize>
+                    </a>
+                </div>
+
+                <!-- LOADER -->
+                <div ng-show="vm.showLoader" class="loading" style="margin-top: 30px; margin-bottom: 30px;">
+                    <localize key="FALM_LogsManager.SearchInProgress">Search in progress. Please wait until you see results</localize>
+                </div>
+                <umb-load-indicator ng-if="vm.showLoader"></umb-load-indicator>
+            </div>
+        </div>
+    </umb-content>
+    <umb-footer id="falm-footer" />
+</umb-panel>

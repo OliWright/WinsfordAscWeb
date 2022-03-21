@@ -1,0 +1,128 @@
+﻿<div ng-controller="FALMHousekeepingVersionsController as vm">
+    <umb-panel>
+        <umb-header id="falm-header">
+            <div class="umb-panel-header-content-wrapper">
+                <div class="umb-panel-header-content">
+                    <div class="umb-panel-header-left-side -top-position" ng-class="{'-top-position': tabs || !icon }">
+                        <div class="umb-panel-header-title-wrapper">
+                            <div class="umb-panel-header-name ng-scope ng-binding">F.A.L.M. Housekeeping</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </umb-header>
+        <umb-content id="falm-content">
+            <div class="umb-panel-body with-header umb-scrollable no-footer" style="padding: 0 20px; margin-top: 19px;">
+                <h3 class="title"><localize key="FALM_VersionsManager.Title">Umbraco Versions Manager</localize></h3>
+                <div class="description">
+                    <localize key="FALM_VersionsManager.Description">With this tool you can manage the Umbraco history versions.</localize>
+                </div>
+                <div ng-switch="id">
+                    <!-- SEARCH PANEL -->
+                    <div ng-show="vm.showSearchPanel" class="searchPanel">
+                        <!-- PANEL: SHOW VERSIONS -->
+                        <div ng-show="vm.versions.versionsItems.length" class="showVersions">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <localize key="FALM_VersionsManager.VersionsPanelTitle">Versions found: </localize> <span class="badge">{{ vm.versions.itemCount }}</span>
+                                </div>
+                                <div class="panel-body">
+                                    <!-- Filters -->
+                                    <form id="filterVersionsForm" ng-submit="vm.filterVersions()" role="form" class="form-inline">
+                                        <div>
+                                            <label for="search" class="sr-only"><localize key="FALM_LogsManager.SearchLabel">Search:</localize></label>
+                                            <div class="input-group" style="float: left; margin-right: 10px;">
+                                                <div class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-search"></span>
+                                                </div>
+                                                <input type="text" ng-model="vm.q" id="search" class="form-control" style="-webkit-border-top-right-radius: 4px !important; -webkit-border-bottom-right-radius: 4px !important; -moz-border-radius-topright: 4px !important; -moz-border-radius-bottomright: 4px !important; border-top-right-radius: 4px !important; border-bottom-right-radius: 4px !important; width: 300px; height: 32px !important;"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="itemsPerPage" style="vertical-align: bottom;"><localize key="FALM_VersionsManager.ItemsPerPage">Items per page:</localize></label>
+                                                <select ng-model="vm.versions.itemsPerPage" id="itemsPerPage" class="form-control" style="-webkit-border-top-right-radius: 4px !important; -webkit-border-bottom-right-radius: 4px !important; -moz-border-radius-topright: 4px !important; -moz-border-radius-bottomright: 4px !important; border-radius: 4px !important; height: 32px !important;">
+                                                    <option value="10">10</option>
+                                                    <option value="50">50</option>
+                                                    <option value="100">100</option>
+                                                    <option value="300">300</option>
+                                                    <option value="500">500</option>
+                                                    <option value="1000">1000</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" id="btnFilterVersions" name="btnFilterVersions" class="btn btn-danger">
+                                                    <localize key="FALM_VersionsManager.StartFilterVersions">Filter Versions</localize>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <!-- List Versions -->
+                                    <div id="FHVersionsTable" class="umb-table" style="margin-bottom: 15px;">
+                                        <div class="umb-table-head">
+                                            <div class="umb-table-row">
+                                                <div class="umb-table-cell not-fixed flx-b1"><localize key="FALM_VersionsManager.NodeId">Node Id</localize></div>
+                                                <div class="umb-table-cell not-fixed flx-b1"><localize key="FALM_VersionsManager.NodeName">Node Name</localize></div>
+                                                <div class="umb-table-cell not-fixed flx-b1"><localize key="FALM_VersionsManager.CurrentPublishedVersionDate">Published Version</localize></div>
+                                                <div class="umb-table-cell not-fixed flx-b1"><localize key="FALM_VersionsManager.TotalVersions">Other versions</localize></div>
+                                            </div>
+                                        </div>
+                                        <div class="umb-table-body">
+                                            <div class="umb-table-row" ng-click="vm.openDetailsModal(versionItem)" ng-repeat="versionItem in vm.versions.versionsItems" current-page="currentPage">
+                                                <div class="umb-table-cell not-fixed flx-b1">{{ versionItem.NodeId }}</div>
+                                                <div class="umb-table-cell not-fixed flx-b1">{{ versionItem.NodeName }}</div>
+                                                <div class="umb-table-cell not-fixed flx-b1">{{ versionItem.PublishedDate | date: 'dd/MM/yyyy HH:mm:ss' }}</div>
+                                                <div class="umb-table-cell not-fixed flx-b1">{{ versionItem.VersionsCount }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-center items-center">
+                                        <umb-pagination ng-if="vm.versions.pagination.totalPages > 1 && !vm.showLoader" page-number="vm.versions.pagination.pageNumber" total-pages="vm.versions.pagination.totalPages" on-next="vm.nextPage" on-prev="vm.prevPage" on-go-to-page="vm.goToPage">
+                                        </umb-pagination>
+                                    </div>
+                                </div>
+                                <div class="panel-footer">
+                                    <form id="versionsCleanupForm" ng-submit="vm.deleteVersionsByCount(0)" role="form" style="float: left; margin: 0 10px 0 0;">
+                                        <button type="submit" id="btnCleanupMedia" name="btnCleanupMedia" class="btn btn-danger">
+                                            <localize key="FALM_VersionsManager.StartCleanupButton">Cleanup all Versions</localize>
+                                        </button>
+                                    </form>
+                                    <a ng-click="vm.openCleanupByCountModal()" class="btn btn-warning" style="margin: 0 6px 0 0;">
+                                        <localize key="FALM_VersionsManager.StartCleanupByCount">Cleanup versions by count</localize>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- PANEL: NO VERSIONS FOUND -->
+                        <div ng-hide="vm.versions.versionsItems.length" class="noVersionsFound">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                        <span class="bold"><localize key="FALM_VersionsManager.VersionsPanelTitle">History Versions</localize></span>
+                                    </div>
+                                <div class="panel-body">
+                                    <p><localize key="FALM_VersionsManager.NoVersionsFound">No versions found</localize></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RESTART SEARCH -->
+                    <div ng-show="!vm.showLoader" class="restartSearch">
+                        <a ng-click="vm.reloadRoute()" class="btn btn-default">
+                            <localize key="FALM_VersionsManager.RestartSearchVersions">Restart versions search</localize>
+                        </a>
+                    </div>
+
+                    <!-- LOADER INFO -->
+                    <div ng-show="vm.showLoader" class="loading" style="margin-top: 30px; margin-bottom: 30px;">
+                        <localize key="FALM_VersionsManager.SearchInProgress">Search in progress. Please wait until you see results</localize>
+                    </div>
+
+                    <!-- LOADER ANIMATION -->
+                    <umb-load-indicator ng-if="vm.showLoader"></umb-load-indicator>
+                </div>
+            </div>
+        </umb-content>
+        <umb-footer id="falm-footer" />
+    </umb-panel>
+</div>

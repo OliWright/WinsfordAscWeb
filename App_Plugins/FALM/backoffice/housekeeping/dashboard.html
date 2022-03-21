@@ -1,0 +1,27 @@
+﻿<script>
+    'use strict';
+    // Create Dasboard controller
+    function FALMHousekeepingDashboardController($scope, $routeParams) {
+        // Set a property on the scope equal to the current route id
+        $scope.id = $routeParams.id;
+    }
+</script>
+
+<div ng-controller="FALMHousekeepingDashboardController">
+    <umb-panel>
+        <umb-content id="falm-content">
+            <div class="umb-panel-body no-header umb-scrollable with-footer" style="padding: 0 20px;">
+                <h3 class="title"><localize key="FALM_Dashboard.Title">Housekeeping</localize></h3>
+                <div class="subtitle">
+                    <localize key="FALM_Dashboard.SubTitle">The new version of our cleaning tool is now in a custom section and has been completely rewritten to take advantage of AngularJS and Bootstrap</localize>
+                </div>
+                <div class="description">
+                    <localize key="FALM_Dashboard.Description">Dashboard Description</localize>
+                </div>
+                <div class="infoBox">
+                    <localize key="FALM_Dashboard.VersionHistory">Version History</localize>
+                </div>
+            </div>
+        </umb-content>
+    </umb-panel>
+</div>
