@@ -26,6 +26,23 @@ namespace Winsford.EventHandlers
                 memberService.Save(member);
             }
 #endif
+#if false
+            // Set the value of sentEmail to true for all update notifications
+            System.Collections.Generic.IEnumerable<IContent> updates = applicationContext.Services.ContentService.GetContentOfContentType(3218);
+            foreach (IContent content in updates)
+            {
+                if (content.HasProperty("sentEmail"))
+                {
+                    Attempt<bool> sentEmail = content.GetValue("sentEmail").TryConvertTo<bool>();
+                    if(sentEmail.Success && !sentEmail.Result)
+                    {
+                        content.SetValue("sentEmail", true);
+                        applicationContext.Services.ContentService.Save(content);
+                    }
+                }
+            }
+#endif
+
             // Listen for when new content is published
             // Trying this again, because the other method is no longer working, but there was a
             // comment saying this fires before the cache is populated, so we can't get a URL reliably.
