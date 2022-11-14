@@ -502,8 +502,11 @@
     <Content Include="config\applications.config" />
     <Content Include="config\404handlers.config" />
     <Content Include="authorize.cshtml" />
-    <Content Include="config\connectionStrings.config" />
+    <Content Include="config\connectionStrings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="config\mailSettings.config" />
+    <Content Include="App_Data\GoogleSheetsData.json" />
     <None Include="packages.config" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Calendar.cshtml" />
